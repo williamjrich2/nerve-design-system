@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NERVE Design System v3 — Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   NERVE DESIGN SYSTEM v3 — SHOWCASE
+   OpenAI-heavy, light-first, minimalist AI product aesthetic.
+   6 pages demonstrating every variation.
+   ================================================================ */
+
+/* --- RESET --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* --- TOKENS --- */
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Roboto Mono', monospace;
+
+  --background: #FDFCFA;
+  --background-warm: #F9F6F1;
+  --background-cool: #F6F5FA;
+  --background-pure: #FFFFFF;
+  --foreground: #171C26;
+  --muted: #6B7280;
+
+  --surface-0: #FDFCFA;
+  --surface-1: #FFFFFF;
+  --surface-2: #F5F3EF;
+  --surface-3: #EDEAE5;
+
+  --primary: #212830;
+  --primary-fg: #FFFFFF;
+
+  --border: #E8E5DF;
+  --border-strong: #CDC8BF;
+
+  --violet: #7C5CFA;
+  --violet-50: #F5F3FF;
+  --violet-100: #EDE9FE;
+  --green: #2BA06E;
+  --green-50: #ECFDF5;
+  --green-100: #D1FAE5;
+  --orange: #E8772E;
+  --orange-50: #FFF7ED;
+  --blue: #3B82F6;
+  --blue-50: #EFF6FF;
+  --blue-100: #DBEAFE;
+  --red: #DC2626;
+  --red-50: #FEF2F2;
+  --amber: #D97706;
+  --amber-50: #FFFBEB;
+  --pink: #EC4899;
+  --pink-50: #FDF2F8;
+  --gray-50: #F9F7F4;
+  --gray-100: #EDEAE5;
+  --gray-200: #D8D3CA;
+  --gray-300: #B5AEA3;
+  --gray-400: #8B8580;
+  --gray-500: #6B7280;
+  --gray-600: #515862;
+  --gray-700: #3A3F4A;
+  --gray-800: #252A33;
+  --gray-900: #171C26;
+
+  --anova: #7305FF;
+  --anova-light: #B87FFF;
+  --anova-mid: #9B4DFF;
+
+  --radius-pill: 9999px;
+  --radius-card: 20px;
+  --radius-panel: 16px;
+  --radius-code: 12px;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.03);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.05);
+  --shadow-float: 0 12px 40px rgba(0,0,0,0.08);
+  --shadow-glow: 0 0 24px rgba(124,92,250,0.08);
+}
+
+/* --- BASE --- */
+body {
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 9999px; }
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* --- NAVIGATION --- */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(253,252,250,0.85);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 300ms ease;
+}
+.site-nav.dark-nav {
+  background: rgba(16,19,24,0.9);
+  border-color: rgba(255,255,255,0.06);
+}
+.nav-inner {
+  max-width: 1200px; width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 15px; letter-spacing: -0.02em;
+}
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-links {
+  display: flex; gap: 4px;
+  background: var(--surface-2);
+  border-radius: 9999px;
+  padding: 4px;
+}
+.dark-nav .nav-links { background: rgba(255,255,255,0.06); }
+.nav-link {
+  padding: 7px 18px; border-radius: 9999px;
+  font-size: 13px; font-weight: 500;
+  color: var(--muted); cursor: pointer;
+  transition: all 200ms ease;
+  border: none; background: none;
+  font-family: var(--font-sans);
+}
+.nav-link:hover { color: var(--foreground); }
+.nav-link.active {
+  background: var(--background-pure);
+  color: var(--foreground);
+  box-shadow: var(--shadow-xs);
+}
+.dark-nav .nav-link { color: rgba(255,255,255,0.5); }
+.dark-nav .nav-link:hover { color: rgba(255,255,255,0.9); }
+.dark-nav .nav-link.active {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+/* --- PAGE CONTAINERS --- */
+.page { display: none; padding-top: 60px; min-height: 100vh; }
+.page.active { display: block; }
+
+/* --- LAYOUT --- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 80px 0; }
+.section-lg { padding: 120px 0; }
+
+/* --- TYPOGRAPHY --- */
+.display-xl {
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  font-weight: 800; line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+.display-lg {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700; line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+.display-md {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700; line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.display-sm {
+  font-size: 1.25rem; font-weight: 600;
+  line-height: 1.3; letter-spacing: -0.02em;
+}
+.overline {
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 600;
+  color: var(--muted);
+}
+.text-muted { color: var(--muted); }
+.text-sm { font-size: 14px; }
+.text-lg { font-size: 18px; line-height: 1.65; }
+.text-gradient {
+  background: linear-gradient(135deg, var(--violet), var(--blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* --- BUTTONS --- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  border-radius: 9999px; font-weight: 500;
+  font-size: 15px; padding: 10px 24px;
+  border: 1px solid transparent;
+  cursor: pointer; transition: all 200ms ease;
+  font-family: var(--font-sans); line-height: 1;
+  text-decoration: none;
+}
+.btn-primary { background: var(--primary); color: var(--primary-fg); box-shadow: var(--shadow-xs); }
+.btn-primary:hover { background: #2d3540; box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.btn-secondary { background: var(--background-pure); color: var(--foreground); border-color: var(--border-strong); }
+.btn-secondary:hover { background: var(--surface-2); }
+.btn-ghost { background: transparent; color: var(--muted); }
+.btn-ghost:hover { background: var(--surface-2); color: var(--foreground); }
+.btn-accent { background: var(--violet); color: #fff; }
+.btn-accent:hover { background: #6B4DE6; transform: translateY(-1px); box-shadow: var(--shadow-glow); }
+.btn-orange { background: var(--orange); color: #fff; }
+.btn-orange:hover { background: #D06A28; transform: translateY(-1px); }
+.btn-green { background: var(--green); color: #fff; }
+.btn-green:hover { background: #249060; transform: translateY(-1px); }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-anova { background: var(--anova); color: #fff; }
+.btn-anova:hover { background: #8B2FFF; transform: translateY(-1px); box-shadow: 0 0 20px rgba(115,5,255,0.4); }
+.btn-sm { padding: 6px 16px; font-size: 13px; }
+.btn-lg { padding: 14px 32px; font-size: 16px; }
+.btn-xl { padding: 18px 40px; font-size: 18px; }
+.btn-icon {
+  width: 40px; height: 40px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--background-pure); color: var(--muted);
+  border-radius: 9999px; border: 1px solid var(--border);
+  cursor: pointer; transition: all 200ms ease;
+}
+.btn-icon:hover { background: var(--surface-2); color: var(--foreground); }
+
+/* --- CARDS --- */
+.card {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-card); box-shadow: var(--shadow-sm);
+  transition: all 200ms ease; padding: 24px;
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.card-float { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--radius-card); box-shadow: var(--shadow-float); padding: 32px; }
+.card-stat { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 20px 24px; box-shadow: var(--shadow-xs); }
+.card-violet { background: var(--violet-50); border-color: var(--violet-100); }
+.card-green { background: var(--green-50); border-color: var(--green-100); }
+.card-blue { background: var(--blue-50); border-color: var(--blue-100); }
+.card-orange { background: var(--orange-50); border-color: rgba(232,119,46,0.15); }
+.card-glass {
+  background: rgba(3,3,5,0.6); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 32px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(115,5,255,0.08);
+  padding: 32px;
+}
+.card-anova {
+  background: var(--surface-1); border: 1px solid rgba(115,5,255,0.12);
+  border-radius: var(--radius-card); box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 0 24px rgba(115,5,255,0.06);
+  padding: 24px;
+}
+
+/* --- BADGES --- */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  border-radius: 9999px; padding: 4px 14px;
+  font-size: 13px; font-weight: 500; line-height: 1.5;
+}
+.badge-dark { background: var(--gray-900); color: #fff; }
+.badge-violet { background: var(--violet-50); color: var(--violet); border: 1px solid var(--violet-100); }
+.badge-green { background: var(--green-50); color: var(--green); border: 1px solid var(--green-100); }
+.badge-orange { background: var(--orange-50); color: var(--orange); border: 1px solid rgba(232,119,46,0.15); }
+.badge-blue { background: var(--blue-50); color: var(--blue); border: 1px solid var(--blue-100); }
+.badge-red { background: var(--red-50); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
+.badge-neutral { background: var(--gray-50); color: var(--gray-600); border: 1px solid var(--gray-200); }
+
+/* --- INPUTS --- */
+.input {
+  border-radius: 9999px; background: var(--background-pure);
+  border: 1px solid var(--border); color: var(--foreground);
+  padding: 10px 20px; font-size: 15px; outline: none;
+  transition: all 200ms ease; font-family: var(--font-sans);
+  width: 100%;
+}
+.input:focus { border-color: var(--gray-400); box-shadow: 0 0 0 3px rgba(23,28,38,0.06); }
+.input::placeholder { color: var(--muted); }
+
+/* --- TABS --- */
+.tabs-list {
+  display: inline-flex; gap: 2px;
+  background: var(--surface-2); border-radius: 9999px; padding: 4px;
+}
+.tab-trigger {
+  border-radius: 9999px; padding: 7px 18px;
+  font-size: 14px; font-weight: 500;
+  color: var(--muted); cursor: pointer;
+  background: transparent; border: none;
+  transition: all 200ms ease; font-family: var(--font-sans);
+}
+.tab-trigger:hover { color: var(--foreground); }
+.tab-trigger.active { color: var(--foreground); background: var(--background-pure); box-shadow: var(--shadow-xs); }
+
+/* --- CHIPS --- */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 18px; border-radius: 9999px;
+  font-size: 14px; font-weight: 500;
+  color: var(--muted); background: var(--background-pure);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: all 200ms ease; font-family: var(--font-sans);
+}
+.chip:hover { border-color: var(--border-strong); color: var(--foreground); }
+.chip.active { background: var(--primary); color: var(--primary-fg); border-color: var(--primary); }
+
+/* --- AVATARS --- */
+.avatar {
+  border-radius: 9999px; display: inline-flex;
+  align-items: center; justify-content: center;
+  font-weight: 600; flex-shrink: 0;
+  width: 36px; height: 36px; font-size: 13px;
+}
+.avatar-violet { background: var(--violet-100); color: var(--violet); }
+.avatar-green { background: var(--green-100); color: var(--green); }
+.avatar-blue { background: var(--blue-100); color: var(--blue); }
+.avatar-orange { background: var(--orange-50); color: var(--orange); }
+
+/* --- CODE --- */
+.code-block {
+  background: var(--gray-900); border-radius: var(--radius-code);
+  padding: 20px; font-family: var(--font-mono);
+  font-size: 13px; line-height: 1.7; overflow-x: auto;
+  color: #E5E0D8;
+}
+.inline-code {
+  background: var(--surface-2); border-radius: 6px;
+  padding: 2px 7px; font-family: var(--font-mono);
+  font-size: 13px; color: var(--violet);
+}
+
+/* --- STATUS DOTS --- */
+.dot { width: 8px; height: 8px; border-radius: 9999px; display: inline-block; }
+.dot-green { background: var(--green); }
+.dot-red { background: var(--red); }
+.dot-amber { background: var(--amber); }
+.dot-gray { background: var(--gray-300); }
+.dot-pulse { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* --- SKELETON --- */
+.skeleton {
+  background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+  background-size: 200% 100%; border-radius: var(--radius-code);
+  animation: shimmer 2s infinite linear;
+}
+
+/* --- TOAST --- */
+.toast {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-panel); padding: 14px 20px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--shadow-lg); max-width: 380px; font-size: 14px;
+}
+
+/* --- KBD --- */
+.kbd {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 2px 8px;
+  font-size: 11px; font-family: var(--font-mono);
+  color: var(--muted);
+}
+
+/* --- BENTO GRID --- */
+.bento-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+@media (min-width: 1024px) { .bento-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+.bento-span-2 { grid-column: span 1; }
+@media (min-width: 768px) { .bento-span-2 { grid-column: span 2; } }
+
+/* --- GRADIENTS --- */
+.bg-gradient-warm { background: linear-gradient(180deg, var(--background-warm) 0%, var(--background) 100%); }
+.bg-gradient-cool { background: linear-gradient(180deg, var(--background-cool) 0%, var(--background) 100%); }
+.bg-gradient-anova { background: radial-gradient(ellipse at center, rgba(115,5,255,0.12) 0%, rgba(115,5,255,0.04) 40%, transparent 70%); }
+
+/* --- UTILITY --- */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.gap-6 { gap: 24px; }
+.gap-8 { gap: 32px; }
+.text-center { text-align: center; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.mt-8 { margin-top: 32px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.w-full { width: 100%; }
+.max-w-xl { max-width: 600px; }
+.max-w-2xl { max-width: 768px; }
+.max-w-3xl { max-width: 900px; }
+.relative { position: relative; }
+.overflow-hidden { overflow: hidden; }
+
+/* --- ANIMATIONS --- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+@keyframes draw {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-draw { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 2.5s ease forwards; }
+
+.fade-up {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 100ms; }
+.delay-2 { transition-delay: 200ms; }
+.delay-3 { transition-delay: 300ms; }
+.delay-4 { transition-delay: 400ms; }
+.delay-5 { transition-delay: 500ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up { opacity: 1; transform: none; transition: none; }
+  .animate-float, .animate-draw, .dot-pulse { animation: none; }
+}
+
+/* --- ICON CONTAINERS --- */
+.icon-box {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.icon-box svg { width: 22px; height: 22px; }
+.icon-violet { background: var(--violet-50); color: var(--violet); }
+.icon-green { background: var(--green-50); color: var(--green); }
+.icon-blue { background: var(--blue-50); color: var(--blue); }
+.icon-orange { background: var(--orange-50); color: var(--orange); }
+
+/* --- DARK MODE (Page 4 only) --- */
+.dark-page {
+  background: #0A0A10;
+  color: #F5F3EF;
+}
+.dark-page .overline { color: rgba(255,255,255,0.4); }
+.dark-page .text-muted { color: rgba(255,255,255,0.5); }
+
+/* --- SOCIAL MOCKUPS --- */
+.social-card {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-card); overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.social-header {
+  padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.social-body { padding: 20px; }
+.social-footer {
+  padding: 12px 20px; border-top: 1px solid var(--border);
+  display: flex; gap: 24px; color: var(--muted); font-size: 13px;
+}
+
+/* --- BROWSER MOCKUP --- */
+.browser-frame {
+  border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; box-shadow: var(--shadow-lg);
+}
+.browser-bar {
+  background: var(--surface-2); padding: 10px 16px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.browser-dot {
+  width: 12px; height: 12px; border-radius: 9999px;
+}
+.browser-url {
+  flex: 1; background: var(--background-pure); border-radius: 8px;
+  padding: 5px 14px; font-size: 12px; color: var(--muted);
+  border: 1px solid var(--border); margin-left: 8px;
+}
+.browser-content { background: var(--background); }
+
+/* --- PRICING --- */
+.pricing-card {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 32px;
+  box-shadow: var(--shadow-sm); transition: all 200ms ease;
+  display: flex; flex-direction: column;
+}
+.pricing-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.pricing-card.featured {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md), 0 0 0 1px var(--primary);
+}
+.pricing-price {
+  font-size: 48px; font-weight: 800;
+  letter-spacing: -0.03em; line-height: 1;
+}
+.pricing-price span { font-size: 16px; font-weight: 400; color: var(--muted); }
+.pricing-feature {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pricing-feature:last-child { border-bottom: none; }
+
+/* --- COMMAND PALETTE --- */
+.cmd-palette {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-panel); box-shadow: var(--shadow-xl);
+  overflow: hidden; max-width: 560px; width: 100%;
+}
+.cmd-input {
+  width: 100%; padding: 16px 20px; border: none;
+  font-size: 15px; background: transparent;
+  color: var(--foreground); outline: none;
+  font-family: var(--font-sans);
+  border-bottom: 1px solid var(--border);
+}
+.cmd-input::placeholder { color: var(--muted); }
+.cmd-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px; cursor: pointer;
+  transition: background 150ms ease; font-size: 14px;
+}
+.cmd-item:hover { background: var(--surface-2); }
+.cmd-item svg { width: 16px; height: 16px; color: var(--muted); }
+.cmd-item .kbd { margin-left: auto; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .section { padding: 48px 0; }
+  .section-lg { padding: 64px 0; }
+  .bento-grid { gap: 12px; }
+  .hide-mobile { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     NAVIGATION
+     ================================================================ -->
+<nav class="site-nav" id="siteNav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M50 15 L20 75 C18 79 20 83 24 83 L30 83 C34 83 37 80 38 76 L50 42 L62 76 C63 80 66 83 70 83 L76 83 C80 83 82 79 80 75 L50 15Z" class="animate-draw"/>
+        <path d="M32 68 C28 68 25 71 25 75 C25 79 28 82 32 82 C36 82 39 79 39 75" class="animate-draw" style="animation-delay:0.5s"/>
+      </svg>
+      <span>NERVE</span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <button class="nav-link active" onclick="showPage('home')">Home</button>
+      <button class="nav-link" onclick="showPage('features')">Features</button>
+      <button class="nav-link" onclick="showPage('product')">Product</button>
+      <button class="nav-link" onclick="showPage('brand')">Brand</button>
+      <button class="nav-link" onclick="showPage('social')">Social</button>
+      <button class="nav-link" onclick="showPage('components')">Components</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ================================================================
+     PAGE 1: HOME — Hero + Bento Grid (OpenAI-style)
+     ================================================================ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="section-lg bg-gradient-warm" style="padding-bottom:48px;">
+    <div class="container text-center">
+      <div class="fade-up" style="margin-bottom:24px;">
+        <svg viewBox="0 0 100 100" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:64px;height:64px;margin:0 auto 24px;">
+          <path d="M50 15 L20 75 C18 79 20 83 24 83 L30 83 C34 83 37 80 38 76 L50 42 L62 76 C63 80 66 83 70 83 L76 83 C80 83 82 79 80 75 L50 15Z" class="animate-draw"/>
+          <path d="M32 68 C28 68 25 71 25 75 C25 79 28 82 32 82 C36 82 39 79 39 75" class="animate-draw" style="animation-delay:0.5s"/>
+        </svg>
+      </div>
+      <div class="fade-up delay-1">
+        <span class="badge badge-dark" style="margin-bottom:20px;display:inline-flex;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Design System v3
+        </span>
+      </div>
+      <h1 class="display-xl fade-up delay-2" style="max-width:800px;margin:0 auto 20px;">Design systems that feel like the future</h1>
+      <p class="text-lg text-muted fade-up delay-3" style="max-width:560px;margin:0 auto 32px;">
+        A minimal, warm, OpenAI-inspired design language. Pill buttons, floating cards, bento grids. Built to scale.
+      </p>
+      <div class="flex gap-3 justify-center fade-up delay-4">
+        <button class="btn btn-primary btn-lg">
+          Get Started
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn btn-secondary btn-lg">View Docs</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Stats -->
+  <section class="section">
+    <div class="container">
+      <div class="bento-grid">
+        <!-- Card 1 -->
+        <div class="card fade-up">
+          <div class="icon-box icon-violet animate-float">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <h3 class="display-sm mt-4">Bento Layouts</h3>
+          <p class="text-muted text-sm mt-2">Modular grid system with card-based blocks. Clear hierarchy, soft spacing, scannable interfaces.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="card fade-up delay-1">
+          <div class="icon-box icon-green animate-float" style="animation-delay:0.5s">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="display-sm mt-4">Accessible</h3>
+          <p class="text-muted text-sm mt-2">WCAG 2.2 AA compliant. Visible focus states, keyboard navigation, reduced motion support built in.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="card fade-up delay-2">
+          <div class="icon-box icon-orange animate-float" style="animation-delay:1s">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="display-sm mt-4">Lightning Fast</h3>
+          <p class="text-muted text-sm mt-2">Zero dependencies. Pure CSS tokens with Tailwind mapping. No runtime, no bloat, just design.</p>
+        </div>
+        <!-- Card 4 - span 2 -->
+        <div class="card card-float bento-span-2 fade-up delay-3">
+          <div class="flex gap-6" style="flex-wrap:wrap;">
+            <div style="flex:1;min-width:240px;">
+              <span class="overline">Built From</span>
+              <h3 class="display-md mt-3">Seven design influences,<br>one unified system</h3>
+              <p class="text-muted mt-3">OpenAI, Vercel, LobeHub, shadcn/ui, and four typeui.sh systems — distilled into a single, opinionated design language.</p>
+              <div class="flex gap-2 mt-4" style="flex-wrap:wrap;">
+                <span class="badge badge-violet">OpenAI</span>
+                <span class="badge badge-blue">Vercel</span>
+                <span class="badge badge-green">LobeHub</span>
+                <span class="badge badge-neutral">shadcn</span>
+                <span class="badge badge-orange">typeui.sh</span>
+              </div>
+            </div>
+            <div style="flex:0 0 200px;" class="hide-mobile">
+              <div class="card-stat" style="margin-bottom:12px;">
+                <span class="overline">Components</span>
+                <div style="font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-top:4px;">24+</div>
+              </div>
+              <div class="card-stat">
+                <span class="overline">Color Tokens</span>
+                <div style="font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-top:4px;">60+</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="card fade-up delay-4">
+          <div class="icon-box icon-blue animate-float" style="animation-delay:1.5s">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </div>
+          <h3 class="display-sm mt-4">Light & Dark</h3>
+          <p class="text-muted text-sm mt-2">Light mode first with warm backgrounds. Dark mode ready when you need it — toggle with a single class.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE 2: FEATURES — Bento Dashboard (Corporate-Elegant)
+     ================================================================ -->
+<div class="page" id="page-features">
+  <section class="section-lg bg-gradient-cool">
+    <div class="container">
+      <div class="text-center fade-up mb-6">
+        <span class="overline">Features</span>
+        <h2 class="display-lg mt-3">Everything you need,<br>nothing you don't</h2>
+        <p class="text-muted text-lg mt-3 max-w-2xl mx-auto">Structured, enterprise-grade components with elegant restraint. Every element earns its place.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="text-center mb-6 fade-up delay-1">
+        <div class="tabs-list">
+          <button class="tab-trigger active" onclick="switchTab(this)">Design</button>
+          <button class="tab-trigger" onclick="switchTab(this)">Components</button>
+          <button class="tab-trigger" onclick="switchTab(this)">Tokens</button>
+          <button class="tab-trigger" onclick="switchTab(this)">Layout</button>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="bento-grid">
+        <div class="card card-violet bento-span-2 fade-up">
+          <div class="flex gap-4 items-center mb-4">
+            <div class="icon-box icon-violet">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div>
+              <span class="overline" style="color:var(--violet);">Design Tokens</span>
+              <h3 class="display-sm">60+ semantic tokens</h3>
+            </div>
+          </div>
+          <p class="text-muted">Colors, typography, spacing, shadows, radii — all mapped to CSS custom properties and Tailwind utilities. Change one token, update everywhere.</p>
+          <div class="flex gap-2 mt-4" style="flex-wrap:wrap;">
+            <span class="badge badge-violet">Colors</span>
+            <span class="badge badge-violet">Typography</span>
+            <span class="badge badge-violet">Spacing</span>
+            <span class="badge badge-violet">Shadows</span>
+            <span class="badge badge-violet">Radii</span>
+          </div>
+        </div>
+
+        <div class="card fade-up delay-1">
+          <div class="icon-box icon-green mb-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4z" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+          </div>
+          <span class="overline" style="color:var(--green);">Layout</span>
+          <h3 class="display-sm mt-2">Bento Grids</h3>
+          <p class="text-muted text-sm mt-2">Modular, responsive grid system. 1→2→3 columns with span utilities for feature layouts.</p>
+        </div>
+
+        <div class="card fade-up delay-2">
+          <div class="icon-box icon-orange mb-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <span class="overline" style="color:var(--orange);">Motion</span>
+          <h3 class="display-sm mt-2">Animation System</h3>
+          <p class="text-muted text-sm mt-2">Fade-up, float, shimmer, pulse, draw — with stagger delays and reduced motion support.</p>
+        </div>
+
+        <div class="card fade-up delay-3">
+          <div class="icon-box icon-blue mb-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
+          </div>
+          <span class="overline" style="color:var(--blue);">Theming</span>
+          <h3 class="display-sm mt-2">Tinted Cards</h3>
+          <p class="text-muted text-sm mt-2">Violet, green, blue, orange, pink tinted backgrounds with matching borders for visual variety.</p>
+        </div>
+
+        <div class="card card-green fade-up delay-4">
+          <div class="flex gap-3 items-center mb-3">
+            <div class="dot dot-green dot-pulse"></div>
+            <span style="font-weight:600;font-size:14px;color:var(--green);">Live System</span>
+          </div>
+          <h3 class="display-sm">Production Ready</h3>
+          <p class="text-muted text-sm mt-2">Copy the CSS, wire up Tailwind, start building. No compilation, no runtime, no config headaches.</p>
+          <div class="mt-4">
+            <div class="code-block" style="font-size:12px;padding:14px;border-radius:10px;">
+              <span style="color:#7C5CFA;">@import</span> <span style="color:#2BA06E;">'./tokens.css'</span>;<br>
+              <span style="color:#7C5CFA;">@import</span> <span style="color:#2BA06E;">'./overrides.css'</span>;
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-blue fade-up delay-5">
+          <div class="flex items-center gap-3 mb-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span style="font-weight:600;font-size:14px;color:var(--blue);">WCAG 2.2 AA</span>
+          </div>
+          <h3 class="display-sm">Accessible</h3>
+          <p class="text-muted text-sm mt-2">4.5:1 contrast, visible focus rings, keyboard-first interactions. Built-in, not bolted-on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE 3: PRODUCT — SaaS Landing (shadcn-Clean)
+     ================================================================ -->
+<div class="page" id="page-product">
+  <!-- Split hero -->
+  <section class="section-lg">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr;gap:48px;align-items:center;">
+        <div class="fade-up" style="max-width:520px;">
+          <span class="badge badge-neutral mb-4" style="display:inline-flex;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+            Open Source
+          </span>
+          <h2 class="display-lg">Ship faster with<br><span class="text-gradient">zero-config design</span></h2>
+          <p class="text-muted text-lg mt-3">Drop in the tokens, import the overrides, build beautiful interfaces. No design degree required.</p>
+          <div class="flex gap-3 mt-6">
+            <button class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg>
+              npm install nerve
+            </button>
+            <button class="btn btn-ghost">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              GitHub
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Command Palette Mockup -->
+      <div class="fade-up delay-2 mt-8" style="max-width:560px;">
+        <div class="cmd-palette">
+          <input class="cmd-input" placeholder="Type a command or search..." readonly>
+          <div class="cmd-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <span>Search components</span>
+            <span class="kbd">Enter</span>
+          </div>
+          <div class="cmd-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Create new page</span>
+            <span class="kbd">N</span>
+          </div>
+          <div class="cmd-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <span>Edit design tokens</span>
+            <span class="kbd">E</span>
+          </div>
+          <div class="cmd-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <span>Toggle dark mode</span>
+            <span class="kbd">D</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section bg-gradient-warm">
+    <div class="container">
+      <div class="text-center mb-6 fade-up">
+        <span class="overline">Pricing</span>
+        <h2 class="display-md mt-3">Simple, transparent pricing</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:960px;margin:0 auto;">
+        <!-- Free -->
+        <div class="pricing-card fade-up delay-1">
+          <span class="badge badge-neutral mb-4" style="align-self:flex-start;">Free</span>
+          <div class="pricing-price">$0<span>/mo</span></div>
+          <p class="text-muted text-sm mt-3 mb-4">Perfect for personal projects and exploration.</p>
+          <div style="flex:1;">
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> All CSS tokens</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Tailwind config</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Component classes</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray-300)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span style="color:var(--muted);">Figma library</span></div>
+          </div>
+          <button class="btn btn-secondary w-full mt-4">Get Started</button>
+        </div>
+        <!-- Pro -->
+        <div class="pricing-card featured fade-up delay-2">
+          <span class="badge badge-dark mb-4" style="align-self:flex-start;">Pro</span>
+          <div class="pricing-price">$29<span>/mo</span></div>
+          <p class="text-muted text-sm mt-3 mb-4">For teams shipping production apps.</p>
+          <div style="flex:1;">
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Everything in Free</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Figma library</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> React components</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Priority support</div>
+          </div>
+          <button class="btn btn-primary w-full mt-4">Start Free Trial</button>
+        </div>
+        <!-- Enterprise -->
+        <div class="pricing-card fade-up delay-3">
+          <span class="badge badge-violet mb-4" style="align-self:flex-start;">Enterprise</span>
+          <div class="pricing-price" style="font-size:36px;">Custom</div>
+          <p class="text-muted text-sm mt-3 mb-4">Tailored to your brand and scale.</p>
+          <div style="flex:1;">
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Everything in Pro</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Custom tokens</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Dedicated onboarding</div>
+            <div class="pricing-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> SLA guarantee</div>
+          </div>
+          <button class="btn btn-accent w-full mt-4">Contact Sales</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE 4: BRAND — Anova Dark Mode (Glassmorphism)
+     ================================================================ -->
+<div class="page dark-page" id="page-brand">
+  <!-- Hero with radial glow -->
+  <section class="section-lg relative" style="overflow:hidden;">
+    <div class="bg-gradient-anova" style="position:absolute;inset:0;"></div>
+    <div class="container relative text-center">
+      <!-- Orbit animation -->
+      <div style="position:relative;width:200px;height:200px;margin:0 auto 40px;">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#B87FFF" stroke-width="2" stroke-linecap="round" style="width:120px;height:120px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+          <path d="M50 15 L20 75 C18 79 20 83 24 83 L30 83 C34 83 37 80 38 76 L50 42 L62 76 C63 80 66 83 70 83 L76 83 C80 83 82 79 80 75 L50 15Z" class="animate-draw"/>
+          <path d="M32 68 C28 68 25 71 25 75 C25 79 28 82 32 82 C36 82 39 79 39 75" class="animate-draw" style="animation-delay:0.5s"/>
+        </svg>
+        <!-- Orbiting particles -->
+        <div style="position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px;animation:orbit 8s linear infinite;">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--anova);box-shadow:0 0 12px var(--anova);"></div>
+        </div>
+        <div style="position:absolute;top:50%;left:50%;width:4px;height:4px;margin:-2px;animation:orbit 12s linear infinite reverse;">
+          <div style="width:4px;height:4px;border-radius:50%;background:var(--anova-light);box-shadow:0 0 8px var(--anova-light);"></div>
+        </div>
+        <div style="position:absolute;top:50%;left:50%;width:5px;height:5px;margin:-2.5px;animation:orbit 6s linear infinite;animation-delay:-2s;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#fff;opacity:0.3;box-shadow:0 0 6px rgba(255,255,255,0.3);"></div>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <span class="badge" style="background:rgba(115,5,255,0.15);color:var(--anova-light);border:1px solid rgba(115,5,255,0.3);margin-bottom:20px;display:inline-flex;">
+          <div class="dot" style="background:var(--anova);box-shadow:0 0 8px var(--anova);"></div>
+          Anova Growth
+        </span>
+      </div>
+      <h1 class="display-xl fade-up delay-1" style="color:#fff;max-width:700px;margin:0 auto 20px;">Built for the<br>speed of growth</h1>
+      <p class="fade-up delay-2" style="color:rgba(255,255,255,0.6);font-size:18px;max-width:500px;margin:0 auto 32px;line-height:1.65;">Premium dark mode with glassmorphism, Anova purple, and space-inspired depth.</p>
+      <div class="flex gap-3 justify-center fade-up delay-3">
+        <button class="btn btn-anova btn-lg">Launch Now</button>
+        <button class="btn btn-lg" style="background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.1);">Learn More</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Glass Cards -->
+  <section class="section">
+    <div class="container">
+      <div class="bento-grid">
+        <div class="card-glass fade-up">
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(115,5,255,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--anova-light)" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 style="font-weight:600;font-size:18px;color:#fff;">AI Automation</h3>
+          <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-top:8px;">Intelligent workflows that learn and adapt to your business processes.</p>
+          <div style="margin-top:16px;height:4px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;">
+            <div style="width:72%;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--anova),var(--anova-mid));"></div>
+          </div>
+        </div>
+
+        <div class="card-glass fade-up delay-1">
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(115,5,255,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--anova-light)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3 style="font-weight:600;font-size:18px;color:#fff;">Lead Generation</h3>
+          <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-top:8px;">Multi-channel outreach systems that fill your pipeline automatically.</p>
+          <div style="margin-top:16px;display:flex;gap:6px;">
+            <div class="dot dot-green dot-pulse"></div>
+            <span style="font-size:12px;color:rgba(255,255,255,0.4);">Active</span>
+          </div>
+        </div>
+
+        <div class="card-glass fade-up delay-2">
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(115,5,255,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--anova-light)" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3 style="font-weight:600;font-size:18px;color:#fff;">Analytics</h3>
+          <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-top:8px;">Real-time dashboards with actionable insights for data-driven decisions.</p>
+          <div style="margin-top:16px;display:flex;gap:8px;align-items:flex-end;height:40px;">
+            <div style="width:16px;height:60%;background:rgba(115,5,255,0.3);border-radius:4px;"></div>
+            <div style="width:16px;height:80%;background:rgba(115,5,255,0.4);border-radius:4px;"></div>
+            <div style="width:16px;height:45%;background:rgba(115,5,255,0.3);border-radius:4px;"></div>
+            <div style="width:16px;height:100%;background:var(--anova);border-radius:4px;box-shadow:0 0 8px rgba(115,5,255,0.4);"></div>
+            <div style="width:16px;height:70%;background:rgba(115,5,255,0.35);border-radius:4px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE 5: SOCIAL — Social Media Mockups (Light)
+     ================================================================ -->
+<div class="page" id="page-social">
+  <section class="section-lg">
+    <div class="container">
+      <div class="text-center mb-6 fade-up">
+        <span class="overline">Brand Extensions</span>
+        <h2 class="display-lg mt-3">One system,<br>every surface</h2>
+        <p class="text-muted text-lg mt-3 max-w-2xl mx-auto">See how NERVE v3 extends from web to social media, email headers, and business collateral.</p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Twitter/X Post Mockup -->
+        <div class="social-card fade-up">
+          <div class="social-header">
+            <div class="avatar avatar-violet">AG</div>
+            <div>
+              <div style="font-weight:600;font-size:14px;">AnovaGrowth</div>
+              <div style="font-size:12px;color:var(--muted);">@anovagrowth</div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--muted)" style="margin-left:auto;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </div>
+          <div class="social-body">
+            <p style="font-size:15px;line-height:1.5;">We just shipped NERVE v3 — our design system that makes every product look like it was designed by the OpenAI team. Warm backgrounds, pill buttons, bento grids.</p>
+            <p style="font-size:15px;line-height:1.5;margin-top:8px;color:var(--violet);">#designsystem #ui #nervedesign</p>
+            <!-- Mini preview card -->
+            <div style="margin-top:12px;border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+              <div style="background:var(--background-warm);padding:24px;text-center;display:flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 100 100" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" style="width:40px;height:40px;">
+                  <path d="M50 15 L20 75 C18 79 20 83 24 83 L30 83 C34 83 37 80 38 76 L50 42 L62 76 C63 80 66 83 70 83 L76 83 C80 83 82 79 80 75 L50 15Z"/>
+                </svg>
+              </div>
+              <div style="padding:12px 16px;border-top:1px solid var(--border);">
+                <div style="font-size:13px;font-weight:600;">NERVE Design System v3</div>
+                <div style="font-size:12px;color:var(--muted);">anovagrowth.com</div>
+              </div>
+            </div>
+          </div>
+          <div class="social-footer">
+            <span>💬 24</span>
+            <span>🔄 89</span>
+            <span>❤️ 312</span>
+            <span>📊 12.4K</span>
+          </div>
+        </div>
+
+        <!-- LinkedIn Post Mockup -->
+        <div class="social-card fade-up delay-1">
+          <div class="social-header">
+            <div class="avatar avatar-green">JR</div>
+            <div>
+              <div style="font-weight:600;font-size:14px;">Jake Richardson</div>
+              <div style="font-size:12px;color:var(--muted);">Founder, Anova Growth Solutions</div>
+            </div>
+          </div>
+          <div class="social-body">
+            <p style="font-size:14px;line-height:1.6;">Every AI company's website looks the same — and there's a reason for that.</p>
+            <p style="font-size:14px;line-height:1.6;margin-top:8px;">Warm off-white backgrounds. Near-black pill buttons. Floating white cards. Tight headlines with generous whitespace.</p>
+            <p style="font-size:14px;line-height:1.6;margin-top:8px;">We decoded the pattern and built NERVE — a design system that gives any product that OpenAI-level polish, out of the box.</p>
+            <div style="margin-top:16px;background:var(--background-warm);border-radius:14px;padding:32px;text-align:center;">
+              <svg viewBox="0 0 100 100" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" style="width:48px;height:48px;margin:0 auto 12px;">
+                <path d="M50 15 L20 75 C18 79 20 83 24 83 L30 83 C34 83 37 80 38 76 L50 42 L62 76 C63 80 66 83 70 83 L76 83 C80 83 82 79 80 75 L50 15Z"/>
+              </svg>
+              <div style="font-weight:700;font-size:20px;letter-spacing:-0.02em;">NERVE v3</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px;">Design System</div>
+            </div>
+          </div>
+          <div class="social-footer">
+            <span>👍 847</span>
+            <span>💬 63 comments</span>
+          </div>
+        </div>
+
+        <!-- OG Preview Card -->
+        <div class="card fade-up delay-2">
+          <span class="overline mb-3" style="display:block;">Open Graph Preview</span>
+          <div style="border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+            <div style="background:linear-gradient(135deg,var(--background-warm),var(--background-cool));padding:40px;text-align:center;">
+              <svg viewBox="0 0 100 100" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" style="width:56px;height:56px;margin:0 auto 16px;">
+                <path d="M50 15 L20 75 C18 79 20 83 24 83 L30 83 C34 83 37 80 38 76 L50 42 L62 76 C63 80 66 83 70 83 L76 83 C80 83 82 79 80 75 L50 15Z"/>
+                <path d="M32 68 C28 68 25 71 25 75 C25 79 28 82 32 82 C36 82 39 79 39 75"/>
+              </svg>
+              <div style="font-weight:800;font-size:24px;letter-spacing:-0.03em;">NERVE Design System</div>
+              <div style="font-size:14px;color:var(--muted);margin-top:4px;">OpenAI-inspired, production-ready</div>
+            </div>
+            <div style="padding:16px;border-top:1px solid var(--border);">
+              <div style="font-size:14px;font-weight:600;">NERVE v3 — Design Systems That Feel Like the Future</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:2px;">Warm, minimal, OpenAI-heavy design language for AI products.</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px;">anovagrowth.com</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Card Mockup -->
+        <div class="card bento-span-2 fade-up delay-3">
+          <span class="overline mb-3" style="display:block;">Business Card</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <!-- Front -->
+            <div style="background:var(--primary);border-radius:14px;padding:32px;color:#fff;aspect-ratio:1.75/1;display:flex;flex-direction:column;justify-content:space-between;">
+              <svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" style="width:32px;height:32px;">
+                <path d="M50 15 L20 75 C18 79 20 83 24 83 L30 83 C34 83 37 80 38 76 L50 42 L62 76 C63 80 66 83 70 83 L76 83 C80 83 82 79 80 75 L50 15Z"/>
+              </svg>
+              <div>
+                <div style="font-weight:700;font-size:16px;letter-spacing:-0.02em;">Jake Richardson</div>
+                <div style="font-size:12px;opacity:0.6;margin-top:2px;">Founder & CEO</div>
+              </div>
+            </div>
+            <!-- Back -->
+            <div style="background:var(--background-warm);border:1px solid var(--border);border-radius:14px;padding:32px;aspect-ratio:1.75/1;display:flex;flex-direction:column;justify-content:space-between;">
+              <div style="font-weight:800;font-size:18px;letter-spacing:-0.03em;">AnovaGrowth</div>
+              <div style="font-size:12px;color:var(--muted);line-height:1.8;">
+                jake@anovagrowth.com<br>
+                anovagrowth.com<br>
+                Birmingham, AL
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Header Mockup -->
+        <div class="card fade-up delay-4">
+          <span class="overline mb-3" style="display:block;">Email Header</span>
+          <div style="border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+            <div style="background:linear-gradient(180deg,var(--primary) 0%,var(--gray-800) 100%);padding:32px;text-align:center;">
+              <svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" style="width:36px;height:36px;margin:0 auto 12px;">
+                <path d="M50 15 L20 75 C18 79 20 83 24 83 L30 83 C34 83 37 80 38 76 L50 42 L62 76 C63 80 66 83 70 83 L76 83 C80 83 82 79 80 75 L50 15Z"/>
+              </svg>
+              <div style="color:#fff;font-weight:700;font-size:20px;letter-spacing:-0.02em;">AnovaGrowth</div>
+              <div style="color:rgba(255,255,255,0.5);font-size:12px;margin-top:4px;">Growth Solutions</div>
+            </div>
+            <div style="padding:20px;text-align:center;">
+              <div style="font-weight:600;font-size:14px;">Your Weekly Growth Report</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px;">March 29, 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE 6: COMPONENTS — Kitchen Sink (Light)
+     ================================================================ -->
+<div class="page" id="page-components">
+  <section class="section-lg">
+    <div class="container">
+      <div class="text-center mb-6 fade-up">
+        <span class="overline">Component Library</span>
+        <h2 class="display-lg mt-3">Every component,<br>every variant</h2>
+      </div>
+
+      <!-- Buttons -->
+      <div class="card mb-6 fade-up">
+        <span class="overline mb-4" style="display:block;">Buttons</span>
+        <div class="flex gap-3 mb-4" style="flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-ghost">Ghost</button>
+          <button class="btn btn-accent">Accent</button>
+          <button class="btn btn-orange">Orange</button>
+          <button class="btn btn-green">Green</button>
+          <button class="btn btn-danger">Danger</button>
+          <button class="btn btn-anova">Anova</button>
+        </div>
+        <div class="flex gap-3 mb-4" style="flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+          <button class="btn btn-primary btn-xl">Extra Large</button>
+        </div>
+        <div class="flex gap-3" style="align-items:center;">
+          <button class="btn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg></button>
+          <button class="btn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
+          <button class="btn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+          <button class="btn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="card mb-6 fade-up delay-1">
+        <span class="overline mb-4" style="display:block;">Badges</span>
+        <div class="flex gap-3" style="flex-wrap:wrap;">
+          <span class="badge badge-dark">Dark</span>
+          <span class="badge badge-violet">Violet</span>
+          <span class="badge badge-green">Green</span>
+          <span class="badge badge-orange">Orange</span>
+          <span class="badge badge-blue">Blue</span>
+          <span class="badge badge-red">Red</span>
+          <span class="badge badge-neutral">Neutral</span>
+        </div>
+      </div>
+
+      <div class="bento-grid mb-6">
+        <!-- Inputs -->
+        <div class="card fade-up delay-2">
+          <span class="overline mb-4" style="display:block;">Inputs</span>
+          <div class="flex flex-col gap-3">
+            <input class="input" placeholder="Text input..." readonly>
+            <input class="input" placeholder="Email address..." readonly>
+            <div class="flex gap-3">
+              <input class="input" placeholder="First name" readonly style="flex:1;">
+              <input class="input" placeholder="Last name" readonly style="flex:1;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Chips -->
+        <div class="card fade-up delay-3">
+          <span class="overline mb-4" style="display:block;">Chips / Filters</span>
+          <div class="flex gap-2" style="flex-wrap:wrap;">
+            <button class="chip active" onclick="this.classList.toggle('active')">All</button>
+            <button class="chip" onclick="this.classList.toggle('active')">Design</button>
+            <button class="chip" onclick="this.classList.toggle('active')">Components</button>
+            <button class="chip" onclick="this.classList.toggle('active')">Tokens</button>
+            <button class="chip" onclick="this.classList.toggle('active')">Layout</button>
+          </div>
+        </div>
+
+        <!-- Avatars & Dots -->
+        <div class="card fade-up delay-4">
+          <span class="overline mb-4" style="display:block;">Avatars & Status</span>
+          <div class="flex gap-3 items-center mb-4">
+            <div class="avatar avatar-violet">JR</div>
+            <div class="avatar avatar-green">AG</div>
+            <div class="avatar avatar-blue">DS</div>
+            <div class="avatar avatar-orange">NK</div>
+          </div>
+          <div class="flex gap-4 items-center">
+            <div class="flex gap-2 items-center"><div class="dot dot-green"></div><span class="text-sm">Online</span></div>
+            <div class="flex gap-2 items-center"><div class="dot dot-amber"></div><span class="text-sm">Away</span></div>
+            <div class="flex gap-2 items-center"><div class="dot dot-red"></div><span class="text-sm">Busy</span></div>
+            <div class="flex gap-2 items-center"><div class="dot dot-gray"></div><span class="text-sm">Offline</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-grid mb-6">
+        <!-- Code -->
+        <div class="card fade-up">
+          <span class="overline mb-4" style="display:block;">Code</span>
+          <div class="code-block mb-3">
+            <span style="color:#7C5CFA;">import</span> { tokens } <span style="color:#7C5CFA;">from</span> <span style="color:#2BA06E;">'nerve/css'</span>;<br><br>
+            <span style="color:#6B7280;">// Apply to your layout</span><br>
+            <span style="color:#E8772E;">const</span> theme = tokens.<span style="color:#3B82F6;">light</span>();
+          </div>
+          <p>Use <span class="inline-code">tokens.css</span> for CSS custom properties or the <span class="inline-code">tailwind.config.ts</span> for utility classes.</p>
+        </div>
+
+        <!-- Toast -->
+        <div class="card fade-up delay-1">
+          <span class="overline mb-4" style="display:block;">Toast / Notification</span>
+          <div class="toast mb-3">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Changes saved successfully</span>
+          </div>
+          <div class="toast">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            <span>Something went wrong</span>
+          </div>
+        </div>
+
+        <!-- Skeleton -->
+        <div class="card fade-up delay-2">
+          <span class="overline mb-4" style="display:block;">Skeleton Loading</span>
+          <div class="flex gap-3 items-center mb-3">
+            <div class="skeleton" style="width:40px;height:40px;border-radius:9999px;flex-shrink:0;"></div>
+            <div style="flex:1;">
+              <div class="skeleton" style="height:14px;width:60%;margin-bottom:8px;"></div>
+              <div class="skeleton" style="height:12px;width:40%;"></div>
+            </div>
+          </div>
+          <div class="skeleton" style="height:80px;width:100%;"></div>
+        </div>
+      </div>
+
+      <!-- Tabs & KBD -->
+      <div class="card fade-up">
+        <span class="overline mb-4" style="display:block;">Tabs & Keyboard Shortcuts</span>
+        <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:16px;">
+          <div class="tabs-list">
+            <button class="tab-trigger active" onclick="switchTab(this)">Overview</button>
+            <button class="tab-trigger" onclick="switchTab(this)">Usage</button>
+            <button class="tab-trigger" onclick="switchTab(this)">API</button>
+            <button class="tab-trigger" onclick="switchTab(this)">Examples</button>
+          </div>
+          <div class="flex gap-2">
+            <span class="kbd">⌘</span>
+            <span class="kbd">K</span>
+            <span style="font-size:13px;color:var(--muted);margin:0 4px;">or</span>
+            <span class="kbd">⌘</span>
+            <span class="kbd">⇧</span>
+            <span class="kbd">P</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+// Page navigation
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  event.target.classList.add('active');
+
+  // Dark nav for brand page
+  const nav = document.getElementById('siteNav');
+  if (name === 'brand') {
+    nav.classList.add('dark-nav');
+  } else {
+    nav.classList.remove('dark-nav');
+  }
+
+  // Re-trigger fade-up animations
+  setTimeout(() => {
+    document.querySelectorAll('#page-' + name + ' .fade-up').forEach(el => {
+      el.classList.remove('visible');
+      void el.offsetWidth; // force reflow
+    });
+    observeElements();
+  }, 50);
+
+  window.scrollTo(0, 0);
+}
+
+// Tab switching
+function switchTab(el) {
+  el.parentElement.querySelectorAll('.tab-trigger').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// IntersectionObserver for fade-up
+function observeElements() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', observeElements);
+</script>
+
+</body>
+</html>
