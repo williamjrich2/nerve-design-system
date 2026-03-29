@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NERVE v3 — Sora-Style Dark Mode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;
+  background:#0c0c0e;color:#fff;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+/* ===== STARFIELD CANVAS ===== */
+#starfield{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ===== NAV ===== */
+.nav{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;align-items:center;gap:4px;
+  background:rgba(20,20,22,0.75);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:999px;padding:6px 8px;
+}
+.nav-brand{
+  font-size:16px;font-weight:600;letter-spacing:-0.03em;
+  padding:8px 18px;color:#fff;
+}
+.nav a,.nav button{
+  font-family:inherit;font-size:14px;font-weight:400;
+  color:rgba(255,255,255,0.5);padding:8px 16px;
+  border-radius:999px;border:none;background:none;
+  cursor:pointer;transition:all 200ms ease;text-decoration:none;
+}
+.nav a:hover,.nav button:hover{color:rgba(255,255,255,0.85);}
+.nav .nav-cta{
+  background:rgba(255,255,255,0.08);color:#fff;
+  border:1px solid rgba(255,255,255,0.1);
+}
+.nav .nav-cta:hover{background:rgba(255,255,255,0.14);}
+
+/* ===== LAYOUT ===== */
+.content{position:relative;z-index:1;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+.section{padding:160px 0;}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:120px 24px 80px;position:relative;
+}
+.hero-icon{
+  width:80px;height:80px;border-radius:20px;
+  background:linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+  border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:32px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4),0 0 60px rgba(115,5,255,0.06);
+}
+.hero-icon svg{width:44px;height:44px;}
+.hero h1{
+  font-size:clamp(48px,7vw,80px);font-weight:300;
+  letter-spacing:-0.05em;line-height:0.95;
+  margin-bottom:20px;
+}
+.hero p{
+  font-size:19px;font-weight:300;line-height:1.7;
+  color:rgba(255,255,255,0.5);max-width:520px;
+}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:32px;padding:14px 28px;
+  border-radius:999px;border:1px solid rgba(255,255,255,0.14);
+  background:transparent;color:rgba(255,255,255,0.7);
+  font-size:15px;font-weight:400;cursor:pointer;
+  font-family:inherit;transition:all 250ms ease;
+  text-decoration:none;
+}
+.hero-cta:hover{
+  border-color:rgba(255,255,255,0.25);
+  color:#fff;background:rgba(255,255,255,0.04);
+}
+
+/* ===== SPLIT SECTION ===== */
+.split{
+  display:grid;grid-template-columns:1fr 1.3fr;gap:48px;
+  align-items:center;
+}
+.split-text h2{
+  font-size:clamp(32px,4vw,52px);font-weight:300;
+  letter-spacing:-0.04em;line-height:1.05;margin-bottom:16px;
+}
+.split-text p{
+  font-size:17px;font-weight:300;line-height:1.72;
+  color:rgba(255,255,255,0.45);max-width:440px;
+}
+
+/* ===== VIDEO PLACEHOLDERS ===== */
+.media-grid{
+  display:grid;gap:12px;
+}
+.media-grid-2x2{
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:200px 200px;
+}
+.media-card{
+  border-radius:20px;overflow:hidden;position:relative;
+  background:linear-gradient(145deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.06);
+}
+.media-card-tall{grid-row:span 2;}
+.media-card-inner{
+  width:100%;height:100%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.03) 0%,rgba(0,0,0,0.2) 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+.media-card-inner svg{
+  width:36px;height:36px;color:rgba(255,255,255,0.15);
+}
+
+/* ===== PROMPT BAR ===== */
+.prompt-bar{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:999px;padding:10px 14px 10px 20px;
+  margin-top:16px;max-width:500px;
+}
+.prompt-bar span{
+  flex:1;font-size:14px;color:rgba(255,255,255,0.35);
+  font-family:inherit;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;
+}
+.prompt-bar .send-btn{
+  width:36px;height:36px;border-radius:999px;
+  background:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:transform 150ms ease;
+}
+.prompt-bar .send-btn:hover{transform:scale(1.05);}
+.prompt-bar .send-btn svg{width:16px;height:16px;color:#0c0c0e;}
+
+/* ===== SHOWCASE CAROUSEL ===== */
+.carousel-wrap{position:relative;overflow:hidden;border-radius:24px;}
+.carousel{
+  display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;padding:4px;
+  scrollbar-width:none;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.carousel-item{
+  flex:0 0 320px;scroll-snap-align:start;
+  border-radius:20px;overflow:hidden;
+  background:linear-gradient(145deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.06);
+  aspect-ratio:9/16;
+  display:flex;align-items:center;justify-content:center;
+}
+.carousel-item svg{width:40px;height:40px;color:rgba(255,255,255,0.1);}
+.carousel-dots{
+  display:flex;gap:8px;justify-content:center;margin-top:20px;
+}
+.carousel-dots .dot{
+  width:8px;height:8px;border-radius:999px;
+  background:rgba(255,255,255,0.15);transition:all 200ms ease;
+  cursor:pointer;border:none;
+}
+.carousel-dots .dot.active{background:rgba(255,255,255,0.6);width:24px;}
+
+/* ===== SOUND SECTION ===== */
+.sound-grid{
+  display:flex;gap:12px;overflow-x:auto;
+  padding:4px 0;scrollbar-width:none;
+}
+.sound-grid::-webkit-scrollbar{display:none;}
+.sound-card{
+  flex:0 0 200px;border-radius:20px;overflow:hidden;
+  background:linear-gradient(145deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.06);
+  padding:20px;display:flex;flex-direction:column;gap:12px;
+  cursor:pointer;transition:all 200ms ease;
+}
+.sound-card:hover{border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);}
+.sound-label{font-size:13px;color:rgba(255,255,255,0.55);font-weight:400;}
+.sound-play{
+  display:flex;align-items:center;gap:8px;
+  font-size:14px;color:rgba(255,255,255,0.7);
+}
+.sound-play svg{width:18px;height:18px;}
+/* Waveform bars */
+.waveform{display:flex;align-items:center;gap:2px;height:32px;}
+.waveform .bar{
+  width:3px;border-radius:999px;
+  background:rgba(255,255,255,0.2);
+  transition:height 300ms ease;
+}
+
+/* ===== FEATURE PILL ROW ===== */
+.feature-pills{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;
+}
+.feature-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:999px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.03);
+  font-size:13px;color:rgba(255,255,255,0.5);
+  font-weight:400;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  padding:40px 0;text-align:center;
+  color:rgba(255,255,255,0.2);font-size:13px;
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-up{
+  opacity:0;transform:translateY(24px);
+  transition:opacity 700ms ease,transform 700ms cubic-bezier(0.16,1,0.3,1);
+}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:100ms}.d2{transition-delay:200ms}
+.d3{transition-delay:300ms}.d4{transition-delay:400ms}
+
+@media(prefers-reduced-motion:reduce){
+  .fade-up{opacity:1;transform:none;transition:none;}
+  #starfield{display:none;}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .split{grid-template-columns:1fr;gap:32px;}
+  .section{padding:100px 0;}
+  .carousel-item{flex:0 0 260px;}
+  .nav{padding:4px 6px;}
+  .nav a,.nav button{padding:6px 12px;font-size:13px;}
+}
+@media(max-width:600px){
+  .hero h1{font-size:40px;}
+  .media-grid-2x2{grid-template-columns:1fr;grid-template-rows:auto;}
+  .media-card-tall{grid-row:span 1;}
+}
+</style>
+</head>
+<body>
+
+<!-- STARFIELD CANVAS -->
+<canvas id="starfield"></canvas>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">Anova</div>
+  <a href="showcase.html">Showcase</a>
+  <button>Overview</button>
+  <button>Features</button>
+  <a href="#" class="nav-cta">Login</a>
+</nav>
+
+<div class="content">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-icon fade-up">
+      <svg viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+        <path d="M 60 16 C 52 36, 52 44, 60 60 C 68 44, 68 36, 60 16"/>
+        <path d="M 104 60 C 84 52, 76 52, 60 60 C 76 68, 84 68, 104 60"/>
+        <path d="M 60 104 C 68 84, 68 76, 60 60 C 52 76, 52 84, 60 104"/>
+        <path d="M 16 60 C 36 68, 44 68, 60 60 C 44 52, 36 52, 16 60"/>
+        <circle cx="60" cy="60" r="4" fill="white" stroke="none"/>
+      </svg>
+    </div>
+    <h1 class="fade-up d1">AnovaGrowth</h1>
+    <p class="fade-up d2">AI-powered systems that automate your growth. From leads to revenue, on autopilot.</p>
+    <a href="#" class="hero-cta fade-up d3">
+      See how it works
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </section>
+
+  <!-- ===== SECTION: From leads to revenue ===== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div class="split-text fade-up">
+          <h2>From leads to revenue</h2>
+          <p>Start with a goal or upload your workflow to build automated systems with real results: outreach, nurturing, booking, and closing.</p>
+          <div class="feature-pills fade-up d2">
+            <span class="feature-pill">Lead gen</span>
+            <span class="feature-pill">Automation</span>
+            <span class="feature-pill">CRM sync</span>
+            <span class="feature-pill">AI agents</span>
+          </div>
+        </div>
+        <div class="fade-up d1">
+          <div class="media-grid media-grid-2x2">
+            <div class="media-card"><div class="media-card-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+            <div class="media-card media-card-tall"><div class="media-card-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+            <div class="media-card"><div class="media-card-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+          </div>
+          <div class="prompt-bar">
+            <span>Build me a lead pipeline for SaaS founders</span>
+            <button class="send-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: Your agents, your rules ===== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="split" style="direction:rtl;">
+        <div class="split-text fade-up" style="direction:ltr;">
+          <h2>Your agents, your rules</h2>
+          <p>Deploy AI agents that work 24/7. You control the persona, the workflow, and the triggers. They handle the rest.</p>
+        </div>
+        <div class="fade-up d1" style="direction:ltr;">
+          <div class="carousel-wrap">
+            <div class="carousel" id="carousel1">
+              <div class="carousel-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+              <div class="carousel-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+              <div class="carousel-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+              <div class="carousel-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            </div>
+          </div>
+          <div class="carousel-dots">
+            <button class="dot active" onclick="scrollCarousel(0)"></button>
+            <button class="dot" onclick="scrollCarousel(1)"></button>
+            <button class="dot" onclick="scrollCarousel(2)"></button>
+            <button class="dot" onclick="scrollCarousel(3)"></button>
+          </div>
+          <div class="prompt-bar" style="margin-top:20px;">
+            <span>Create an outreach agent for LinkedIn</span>
+            <button class="send-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: Remix everything ===== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div class="split-text fade-up">
+          <h2>Remix everything</h2>
+          <p>Take an existing workflow and make it yours. Swap triggers, change the messaging, add new steps, or extend across channels.</p>
+        </div>
+        <div class="fade-up d1">
+          <div class="media-grid" style="grid-template-columns:1fr;gap:12px;">
+            <div class="media-card" style="height:280px;"><div class="media-card-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div></div>
+          </div>
+          <div class="prompt-bar">
+            <span>Adapt this funnel for e-commerce brands</span>
+            <button class="send-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION: Cue the insights ===== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="fade-up" style="max-width:480px;margin-bottom:40px;">
+        <h2 style="font-size:clamp(32px,4vw,52px);font-weight:300;letter-spacing:-0.04em;line-height:1.05;">Cue the insights</h2>
+        <p style="font-size:17px;font-weight:300;line-height:1.72;color:rgba(255,255,255,0.45);margin-top:12px;">Real-time analytics, pipeline health, and revenue tracking are automatically included in every system we build.</p>
+      </div>
+      <div class="sound-grid fade-up d1">
+        <div class="sound-card">
+          <div class="waveform" id="wave1"></div>
+          <div class="sound-label">Pipeline velocity</div>
+          <div class="sound-play">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Live
+          </div>
+        </div>
+        <div class="sound-card">
+          <div class="waveform" id="wave2"></div>
+          <div class="sound-label">Lead response time</div>
+          <div class="sound-play">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Live
+          </div>
+        </div>
+        <div class="sound-card">
+          <div class="waveform" id="wave3"></div>
+          <div class="sound-label">Revenue closed</div>
+          <div class="sound-play">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Live
+          </div>
+        </div>
+        <div class="sound-card">
+          <div class="waveform" id="wave4"></div>
+          <div class="sound-label">Agent uptime</div>
+          <div class="sound-play">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Live
+          </div>
+        </div>
+        <div class="sound-card">
+          <div class="waveform" id="wave5"></div>
+          <div class="sound-label">Conversion rate</div>
+          <div class="sound-play">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Live
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">NERVE Design System v3 — Sora-style dark mode reference</div>
+  </footer>
+
+</div>
+
+<script>
+/* ===== STARFIELD ===== */
+(function(){
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let scrollY = 0;
+  const STAR_COUNT = 200;
+
+  function resize(){
+    canvas.width = window.innerWidth * 2;
+    canvas.height = window.innerHeight * 2;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.scale(2, 2);
+  }
+
+  function createStars(){
+    stars = [];
+    const w = window.innerWidth;
+    const h = document.body.scrollHeight || window.innerHeight * 5;
+    for(let i = 0; i < STAR_COUNT; i++){
+      stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.4 + 0.3,
+        a: Math.random() * 0.5 + 0.1,
+        speed: Math.random() * 0.3 + 0.05,
+        phase: Math.random() * Math.PI * 2,
+      });
+    }
+  }
+
+  function draw(){
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    const t = Date.now() * 0.001;
+
+    for(const s of stars){
+      // Parallax: stars move at different speeds relative to scroll
+      const py = (s.y - scrollY * s.speed * 0.8) % (h * 4);
+      const sy = ((py % h) + h) % h; // wrap to viewport
+      const sx = s.x % w;
+
+      // Twinkle
+      const twinkle = Math.sin(t * 1.5 + s.phase) * 0.3 + 0.7;
+      const alpha = s.a * twinkle;
+
+      ctx.beginPath();
+      ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', ()=>{ resize(); createStars(); });
+  window.addEventListener('scroll', ()=>{ scrollY = window.pageYOffset; });
+
+  resize();
+  createStars();
+  draw();
+})();
+
+/* ===== WAVEFORM BARS ===== */
+function createWaveform(id, count){
+  const el = document.getElementById(id);
+  if(!el) return;
+  for(let i = 0; i < count; i++){
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    const h = Math.random() * 24 + 6;
+    bar.style.height = h + 'px';
+    el.appendChild(bar);
+  }
+  // Animate
+  setInterval(()=>{
+    el.querySelectorAll('.bar').forEach(b=>{
+      b.style.height = (Math.random() * 24 + 6) + 'px';
+    });
+  }, 600);
+}
+createWaveform('wave1', 20);
+createWaveform('wave2', 20);
+createWaveform('wave3', 20);
+createWaveform('wave4', 20);
+createWaveform('wave5', 20);
+
+/* ===== CAROUSEL DOTS ===== */
+function scrollCarousel(idx){
+  const c = document.getElementById('carousel1');
+  if(!c) return;
+  c.scrollTo({ left: idx * 336, behavior: 'smooth' });
+  document.querySelectorAll('.carousel-dots .dot').forEach((d,i)=>{
+    d.classList.toggle('active', i === idx);
+    d.style.width = i === idx ? '24px' : '8px';
+  });
+}
+
+/* ===== FADE UP ===== */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
