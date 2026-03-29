@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERVE Design System v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Roboto Mono', monospace;
+
+      --background:      40 20% 98%;
+      --background-warm: 35 25% 96%;
+      --background-cool: 240 20% 97%;
+      --background-pure: 0 0% 100%;
+      --foreground:      220 30% 12%;
+
+      --surface-0: 40 20% 98%;
+      --surface-1: 0 0% 100%;
+      --surface-2: 40 15% 96%;
+      --surface-3: 40 12% 93%;
+
+      --primary:             220 14% 15%;
+      --primary-foreground:  0 0% 100%;
+      --muted-foreground:    220 10% 46%;
+      --accent:              252 80% 62%;
+      --accent-green:        160 60% 42%;
+      --accent-orange:       24 90% 55%;
+      --destructive:         0 72% 51%;
+      --success:             160 60% 42%;
+      --warning:             38 92% 50%;
+      --info:                213 90% 55%;
+
+      --border:        30 10% 90%;
+      --border-strong: 30 10% 82%;
+
+      --violet-50: 252 80% 97%;  --violet-100: 252 80% 92%;  --violet-400: 252 80% 62%;  --violet-500: 252 80% 52%;
+      --blue-50: 213 90% 96%;    --blue-100: 213 90% 90%;    --blue-400: 213 90% 55%;    --blue-500: 213 90% 45%;
+      --green-50: 160 50% 95%;   --green-100: 160 50% 88%;   --green-400: 160 60% 42%;   --green-500: 160 60% 36%;
+      --amber-50: 38 92% 95%;    --amber-400: 38 92% 55%;
+      --orange-50: 24 90% 95%;   --orange-400: 24 90% 55%;   --orange-500: 24 90% 48%;
+      --red-50: 0 72% 96%;       --red-400: 0 72% 55%;       --red-500: 0 72% 48%;
+      --pink-50: 330 80% 96%;    --pink-400: 330 80% 60%;
+      --gray-50: 40 15% 97%;     --gray-100: 40 12% 93%;     --gray-200: 35 10% 85%;
+      --gray-300: 30 8% 72%;     --gray-400: 220 8% 55%;     --gray-500: 220 10% 46%;
+      --gray-600: 220 12% 35%;   --gray-700: 220 15% 25%;    --gray-800: 220 20% 16%;
+      --gray-900: 220 30% 12%;
+
+      --shadow-xs:    0 1px 2px rgba(0,0,0,0.04);
+      --shadow-sm:    0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-md:    0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.03);
+      --shadow-lg:    0 8px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-xl:    0 16px 48px rgba(0,0,0,0.1);
+      --shadow-float: 0 12px 40px rgba(0,0,0,0.08);
+
+      --radius-card: 20px;
+      --radius-panel: 16px;
+      --radius-code: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: hsl(var(--background-warm));
+      color: hsl(var(--foreground));
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* Layout */
+    .page { max-width: 1060px; margin: 0 auto; padding: 0 32px 80px; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 0 64px;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      color: hsl(var(--foreground));
+      margin-bottom: 16px;
+    }
+    .hero p {
+      color: hsl(var(--muted-foreground));
+      font-size: 1.125rem;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Section */
+    .section { margin-bottom: 64px; }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      color: hsl(var(--foreground));
+    }
+    .section-desc {
+      color: hsl(var(--muted-foreground));
+      font-size: 0.9375rem;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .overline {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 14px;
+    }
+
+    /* Grid */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+    .flex-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .flex-col { display: flex; flex-direction: column; gap: 8px; }
+
+    /* Card */
+    .card {
+      background: hsl(var(--surface-1));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius-card);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: all 250ms ease-in-out;
+    }
+    .card:hover { box-shadow: var(--shadow-md); }
+
+    .card-float {
+      background: hsl(var(--surface-1));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius-card);
+      padding: 24px;
+      box-shadow: var(--shadow-float);
+    }
+
+    /* Tinted cards */
+    .card-violet { background: hsl(var(--violet-50)); border-color: hsl(var(--violet-100)); }
+    .card-green  { background: hsl(var(--green-50)); border-color: hsl(var(--green-100)); }
+    .card-blue   { background: hsl(var(--blue-50)); border-color: hsl(var(--blue-100)); }
+    .card-orange { background: hsl(var(--orange-50)); border-color: hsl(24 90% 85%); }
+    .card-pink   { background: hsl(var(--pink-50)); border-color: hsl(330 80% 90%); }
+
+    /* Swatches */
+    .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+    .swatch { border-radius: var(--radius-code); overflow: hidden; border: 1px solid hsl(var(--border)); background: hsl(var(--surface-1)); }
+    .swatch-color { height: 52px; }
+    .swatch-info { padding: 8px 10px; }
+    .swatch-name { font-size: 0.75rem; font-weight: 600; }
+    .swatch-value { font-size: 0.6875rem; font-family: var(--font-mono); color: hsl(var(--muted-foreground)); margin-top: 2px; }
+
+    /* Buttons */
+    .btn {
+      border-radius: 9999px; font-weight: 500; font-size: 0.9375rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      cursor: pointer; transition: all 200ms ease-in-out;
+      border: 1px solid transparent; line-height: 1;
+      padding: 10px 24px; text-decoration: none; font-family: var(--font-sans);
+    }
+    .btn-primary { background: hsl(var(--primary)); color: #fff; box-shadow: var(--shadow-xs); }
+    .btn-primary:hover { background: hsl(220 14% 22%); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+    .btn-secondary { background: hsl(var(--surface-1)); color: hsl(var(--foreground)); border-color: hsl(var(--border-strong)); }
+    .btn-secondary:hover { background: hsl(var(--surface-2)); }
+    .btn-ghost { background: transparent; color: hsl(var(--muted-foreground)); }
+    .btn-ghost:hover { background: hsl(var(--surface-2)); color: hsl(var(--foreground)); }
+    .btn-accent { background: hsl(var(--accent)); color: #fff; }
+    .btn-accent:hover { background: hsl(252 80% 55%); transform: translateY(-1px); }
+    .btn-orange { background: hsl(var(--accent-orange)); color: #fff; }
+    .btn-orange:hover { background: hsl(24 90% 48%); transform: translateY(-1px); }
+    .btn-green { background: hsl(var(--accent-green)); color: #fff; }
+    .btn-green:hover { background: hsl(160 60% 36%); transform: translateY(-1px); }
+    .btn-danger { background: hsl(var(--destructive)); color: #fff; }
+    .btn-sm { padding: 6px 16px; font-size: 0.8125rem; }
+    .btn-lg { padding: 14px 32px; font-size: 1rem; }
+    .btn-xl { padding: 18px 40px; font-size: 1.125rem; }
+    .btn-icon {
+      width: 40px; height: 40px; padding: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: hsl(var(--surface-1)); color: hsl(var(--muted-foreground));
+      border-radius: 9999px; border: 1px solid hsl(var(--border));
+      cursor: pointer; transition: all 200ms ease-in-out;
+    }
+    .btn-icon:hover { background: hsl(var(--surface-2)); color: hsl(var(--foreground)); }
+
+    /* Badges */
+    .badge {
+      border-radius: 9999px; padding: 4px 14px; font-size: 0.8125rem;
+      font-weight: 500; display: inline-flex; align-items: center; gap: 6px; line-height: 1.5;
+    }
+    .badge-dark    { background: hsl(var(--gray-900)); color: #fff; }
+    .badge-violet  { background: hsl(var(--violet-50)); color: hsl(var(--violet-500)); border: 1px solid hsl(var(--violet-100)); }
+    .badge-green   { background: hsl(var(--green-50)); color: hsl(var(--green-500)); border: 1px solid hsl(var(--green-100)); }
+    .badge-orange  { background: hsl(var(--orange-50)); color: hsl(var(--orange-500)); border: 1px solid hsl(24 90% 88%); }
+    .badge-blue    { background: hsl(var(--blue-50)); color: hsl(var(--blue-500)); border: 1px solid hsl(var(--blue-100)); }
+    .badge-red     { background: hsl(var(--red-50)); color: hsl(var(--red-500)); border: 1px solid hsl(0 72% 90%); }
+    .badge-neutral { background: hsl(var(--gray-50)); color: hsl(var(--gray-600)); border: 1px solid hsl(var(--gray-200)); }
+
+    /* Inputs */
+    .input {
+      border-radius: 9999px; background: hsl(var(--surface-1));
+      border: 1px solid hsl(var(--border)); color: hsl(var(--foreground));
+      padding: 10px 20px; font-size: 0.9375rem; width: 100%; outline: none;
+      font-family: var(--font-sans); transition: all 200ms ease-in-out;
+    }
+    .input:focus { border-color: hsl(var(--gray-400)); box-shadow: 0 0 0 3px hsl(var(--gray-900) / 0.06); }
+    .input::placeholder { color: hsl(var(--muted-foreground)); }
+
+    .textarea {
+      border-radius: var(--radius-panel); background: hsl(var(--surface-1));
+      border: 1px solid hsl(var(--border)); color: hsl(var(--foreground));
+      padding: 14px 18px; font-size: 0.9375rem; width: 100%; outline: none;
+      font-family: var(--font-sans); resize: vertical; min-height: 80px;
+      transition: all 200ms ease-in-out;
+    }
+    .textarea:focus { border-color: hsl(var(--gray-400)); box-shadow: 0 0 0 3px hsl(var(--gray-900) / 0.06); }
+
+    .select {
+      border-radius: 9999px; background: hsl(var(--surface-1));
+      border: 1px solid hsl(var(--border)); color: hsl(var(--foreground));
+      padding: 10px 36px 10px 20px; font-size: 0.9375rem; width: 100%; outline: none;
+      font-family: var(--font-sans); appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a8f9a' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      transition: all 200ms ease-in-out;
+    }
+    .select:focus { border-color: hsl(var(--gray-400)); box-shadow: 0 0 0 3px hsl(var(--gray-900) / 0.06); }
+
+    /* Toggle */
+    .toggle {
+      width: 44px; height: 24px; border-radius: 9999px;
+      background: hsl(var(--gray-200)); border: none; cursor: pointer;
+      position: relative; transition: background 200ms ease-in-out;
+    }
+    .toggle::after {
+      content: ''; width: 18px; height: 18px; border-radius: 9999px;
+      background: white; position: absolute; top: 3px; left: 3px;
+      transition: transform 200ms ease-in-out; box-shadow: var(--shadow-xs);
+    }
+    .toggle.active { background: hsl(var(--primary)); }
+    .toggle.active::after { transform: translateX(20px); }
+
+    /* Tabs */
+    .tabs {
+      background: hsl(var(--surface-2)); border-radius: 9999px;
+      padding: 4px; display: inline-flex; gap: 2px;
+    }
+    .tab {
+      border-radius: 9999px; padding: 7px 18px; font-size: 0.875rem;
+      font-weight: 500; color: hsl(var(--muted-foreground));
+      cursor: pointer; background: transparent; border: none;
+      transition: all 200ms ease-in-out; font-family: var(--font-sans);
+    }
+    .tab:hover { color: hsl(var(--foreground)); }
+    .tab.active { color: hsl(var(--foreground)); background: hsl(var(--surface-1)); box-shadow: var(--shadow-xs); }
+
+    /* Nav pills (Outportal style) */
+    .nav-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 9999px; font-size: 0.875rem;
+      font-weight: 500; color: hsl(var(--muted-foreground));
+      text-decoration: none; cursor: pointer; transition: all 200ms ease-in-out;
+    }
+    .nav-pill:hover { background: hsl(var(--surface-2)); color: hsl(var(--foreground)); }
+    .nav-pill.active { background: hsl(160 50% 92%); color: hsl(var(--green-500)); }
+    .nav-pill svg { width: 14px; height: 14px; }
+
+    /* Avatar */
+    .avatar {
+      border-radius: 9999px; overflow: hidden;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 600; flex-shrink: 0;
+    }
+    .avatar-sm { width: 28px; height: 28px; font-size: 0.65rem; }
+    .avatar-md { width: 36px; height: 36px; font-size: 0.8rem; }
+    .avatar-lg { width: 44px; height: 44px; font-size: 0.9rem; }
+    .avatar-violet { background: hsl(var(--violet-100)); color: hsl(var(--violet-500)); }
+    .avatar-green  { background: hsl(var(--green-100)); color: hsl(var(--green-500)); }
+    .avatar-blue   { background: hsl(var(--blue-100)); color: hsl(var(--blue-500)); }
+    .avatar-orange { background: hsl(var(--orange-50)); color: hsl(var(--orange-500)); }
+
+    /* Status dot */
+    .dot { width: 8px; height: 8px; border-radius: 9999px; display: inline-block; }
+    .dot-green { background: hsl(var(--green-400)); }
+    .dot-red   { background: hsl(var(--red-400)); }
+    .dot-amber { background: hsl(var(--amber-400)); }
+    .dot-gray  { background: hsl(var(--gray-300)); }
+
+    /* Code */
+    .code {
+      background: hsl(var(--gray-900)); border-radius: var(--radius-code);
+      padding: 20px; font-family: var(--font-mono); font-size: 0.8125rem;
+      line-height: 1.7; overflow-x: auto; white-space: pre; color: hsl(40 20% 88%);
+    }
+    .inline-code {
+      background: hsl(var(--surface-2)); border-radius: 6px; padding: 2px 7px;
+      font-family: var(--font-mono); font-size: 0.8125rem; color: hsl(var(--violet-500));
+    }
+
+    /* Kbd */
+    .kbd {
+      background: hsl(var(--surface-2)); border: 1px solid hsl(var(--border));
+      border-radius: 8px; padding: 2px 8px; font-size: 0.6875rem;
+      font-family: var(--font-mono); color: hsl(var(--muted-foreground));
+    }
+
+    /* Divider */
+    .divider { height: 1px; background: hsl(var(--border)); margin: 40px 0; }
+
+    /* Skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, hsl(var(--gray-100)) 25%, hsl(var(--gray-200)) 50%, hsl(var(--gray-100)) 75%);
+      background-size: 200% 100%; animation: shimmer 2s infinite linear; border-radius: var(--radius-code);
+    }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    /* Toast */
+    .toast {
+      background: hsl(var(--surface-1)); border: 1px solid hsl(var(--border));
+      border-radius: var(--radius-panel); padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: var(--shadow-lg); max-width: 380px; font-size: 0.875rem;
+    }
+
+    /* Type demo */
+    .type-row { display: flex; align-items: baseline; gap: 20px; padding: 10px 0; border-bottom: 1px solid hsl(var(--border)); }
+    .type-label { font-size: 0.6875rem; font-family: var(--font-mono); color: hsl(var(--muted-foreground)); width: 70px; flex-shrink: 0; }
+
+    /* Spacing demo */
+    .space-bar { background: hsl(var(--accent) / 0.12); border-radius: 6px; height: 20px; border: 1px solid hsl(var(--accent) / 0.15); }
+
+    /* Top nav */
+    .top-nav {
+      position: sticky; top: 0; z-index: 20;
+      background: hsl(var(--background-warm) / 0.9);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid hsl(var(--border));
+      padding: 10px 32px; display: flex; align-items: center; gap: 20px;
+    }
+    .nav-logo { font-weight: 800; font-size: 1rem; letter-spacing: -0.03em; color: hsl(var(--foreground)); text-decoration: none; }
+    .nav-link { font-size: 0.8125rem; color: hsl(var(--muted-foreground)); text-decoration: none; transition: color 200ms; }
+    .nav-link:hover { color: hsl(var(--foreground)); }
+
+    /* Progress bar */
+    .progress-track { background: hsl(var(--gray-100)); border-radius: 9999px; height: 8px; width: 100%; overflow: hidden; }
+    .progress-fill { background: hsl(var(--accent-green)); height: 100%; border-radius: 9999px; transition: width 500ms ease-out; }
+
+    /* Gradient section bg */
+    .bg-warm { background: hsl(var(--background-warm)); }
+    .bg-cool { background: hsl(var(--background-cool)); }
+    .bg-sunset { background: linear-gradient(135deg, hsl(40 30% 96%) 0%, hsl(330 25% 96%) 50%, hsl(250 25% 97%) 100%); }
+
+    /* Command palette */
+    .cmd {
+      background: hsl(var(--surface-1)); border: 1px solid hsl(var(--border));
+      border-radius: var(--radius-panel); box-shadow: var(--shadow-xl);
+      overflow: hidden; max-width: 480px;
+    }
+    .cmd-input {
+      background: transparent; border: none; border-bottom: 1px solid hsl(var(--border));
+      padding: 14px 18px; font-size: 0.9375rem; color: hsl(var(--foreground));
+      width: 100%; outline: none; font-family: var(--font-sans);
+    }
+    .cmd-input::placeholder { color: hsl(var(--muted-foreground)); }
+    .cmd-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 18px; font-size: 0.875rem; color: hsl(var(--muted-foreground));
+      cursor: pointer; transition: all 100ms ease-out;
+    }
+    .cmd-item:hover { background: hsl(var(--surface-2)); color: hsl(var(--foreground)); }
+    .cmd-item svg { width: 16px; height: 16px; opacity: 0.5; }
+    .cmd-item .kbd { margin-left: auto; }
+
+    /* Sidebar */
+    .sidebar-demo {
+      background: hsl(var(--surface-1)); border: 1px solid hsl(var(--border));
+      border-radius: var(--radius-card); padding: 16px 12px;
+      display: flex; flex-direction: column; gap: 2px; max-width: 240px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: 9999px; font-size: 0.875rem;
+      font-weight: 500; color: hsl(var(--muted-foreground));
+      cursor: pointer; transition: all 200ms ease-in-out;
+    }
+    .sidebar-item:hover { background: hsl(var(--surface-2)); color: hsl(var(--foreground)); }
+    .sidebar-item.active { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+    .sidebar-item svg { width: 16px; height: 16px; }
+
+    /* Filter chips (ChatGPT style) */
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 18px; border-radius: 9999px; font-size: 0.875rem;
+      font-weight: 500; color: hsl(var(--muted-foreground));
+      background: hsl(var(--surface-1)); border: 1px solid hsl(var(--border));
+      cursor: pointer; transition: all 200ms ease-in-out;
+      font-family: var(--font-sans); user-select: none;
+    }
+    .chip:hover { border-color: hsl(var(--border-strong)); color: hsl(var(--foreground)); }
+    .chip-active, .chip.active {
+      background: hsl(var(--primary)); color: hsl(var(--primary-foreground));
+      border-color: hsl(var(--primary));
+    }
+
+    /* List items with thumbnails (ChatGPT style) */
+    .list-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid hsl(var(--border));
+      transition: background 150ms ease-out;
+    }
+    .list-item:last-child { border-bottom: none; }
+    .list-item:hover { background: hsl(var(--surface-2)); }
+    .list-thumb {
+      width: 52px; height: 52px; border-radius: 14px;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .list-content { flex: 1; min-width: 0; padding: 0 4px; }
+    .list-title { font-weight: 600; font-size: 0.9375rem; color: hsl(var(--foreground)); }
+    .list-sub { font-size: 0.8125rem; color: hsl(var(--muted-foreground)); margin-top: 3px; }
+
+    /* Quantity stepper (ChatGPT shopping style) */
+    .stepper {
+      display: inline-flex; align-items: center; gap: 0;
+      border: 1px solid hsl(var(--border)); border-radius: 9999px;
+      overflow: hidden; background: hsl(var(--surface-1));
+    }
+    .stepper-btn {
+      width: 34px; height: 34px; display: inline-flex;
+      align-items: center; justify-content: center;
+      background: transparent; border: none; cursor: pointer;
+      font-size: 1rem; font-weight: 500; color: hsl(var(--muted-foreground));
+      transition: all 150ms ease-out; font-family: var(--font-sans);
+    }
+    .stepper-btn:hover { background: hsl(var(--surface-2)); color: hsl(var(--foreground)); }
+    .stepper-value {
+      min-width: 28px; text-align: center;
+      font-size: 0.875rem; font-weight: 600; color: hsl(var(--foreground));
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="top-nav">
+    <a class="nav-logo" href="#">NERVE</a>
+    <a href="#colors" class="nav-link">Colors</a>
+    <a href="#typography" class="nav-link">Typography</a>
+    <a href="#buttons" class="nav-link">Buttons</a>
+    <a href="#inputs" class="nav-link">Inputs</a>
+    <a href="#badges" class="nav-link">Badges</a>
+    <a href="#cards" class="nav-link">Cards</a>
+    <a href="#components" class="nav-link">Components</a>
+    <a href="#spacing" class="nav-link">Spacing</a>
+  </nav>
+
+  <div class="page">
+    <!-- HERO -->
+    <div class="hero">
+      <h1>More than a system,<br>Nerve helps you ship.</h1>
+      <p>Light-first. Warm backgrounds. Pill buttons. Bold display type. Built for AI products that feel designed, not generated.</p>
+      <div class="flex-row" style="justify-content: center; margin-top: 28px;">
+        <button class="btn btn-primary btn-lg">Get Started</button>
+        <button class="btn btn-secondary btn-lg">View on GitHub</button>
+      </div>
+    </div>
+
+    <!-- COLORS -->
+    <div class="section" id="colors">
+      <h2 class="section-title">Color System</h2>
+      <p class="section-desc">Warm off-white backgrounds. Pure white cards that float. Dark primary for CTAs. Tinted accent colors for badges and status.</p>
+
+      <div class="overline">BACKGROUNDS</div>
+      <div class="swatch-grid" style="margin-bottom: 28px;">
+        <div class="swatch"><div class="swatch-color" style="background: hsl(40, 20%, 98%);"></div><div class="swatch-info"><div class="swatch-name">Default</div><div class="swatch-value">--background</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(35, 25%, 96%);"></div><div class="swatch-info"><div class="swatch-name">Warm</div><div class="swatch-value">--background-warm</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(240, 20%, 97%);"></div><div class="swatch-info"><div class="swatch-name">Cool</div><div class="swatch-value">--background-cool</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #fff; border-bottom: 1px solid hsl(30,10%,90%);"></div><div class="swatch-info"><div class="swatch-name">Pure White</div><div class="swatch-value">--surface-1</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(40, 15%, 96%);"></div><div class="swatch-info"><div class="swatch-name">Surface 2</div><div class="swatch-value">--surface-2</div></div></div>
+      </div>
+
+      <div class="overline">PRIMARY & ACCENTS</div>
+      <div class="swatch-grid" style="margin-bottom: 28px;">
+        <div class="swatch"><div class="swatch-color" style="background: hsl(220, 14%, 15%);"></div><div class="swatch-info"><div class="swatch-name">Primary</div><div class="swatch-value">Near-black</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(252, 80%, 62%);"></div><div class="swatch-info"><div class="swatch-name">Violet</div><div class="swatch-value">--accent</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(160, 60%, 42%);"></div><div class="swatch-info"><div class="swatch-name">Green</div><div class="swatch-value">--accent-green</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(24, 90%, 55%);"></div><div class="swatch-info"><div class="swatch-name">Orange</div><div class="swatch-value">--accent-orange</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(213, 90%, 55%);"></div><div class="swatch-info"><div class="swatch-name">Blue</div><div class="swatch-value">--info</div></div></div>
+      </div>
+
+      <div class="overline">SEMANTIC</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-color" style="background: hsl(0, 72%, 51%);"></div><div class="swatch-info"><div class="swatch-name">Destructive</div><div class="swatch-value">--destructive</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(160, 60%, 42%);"></div><div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-value">--success</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: hsl(38, 92%, 50%);"></div><div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-value">--warning</div></div></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TYPOGRAPHY -->
+    <div class="section" id="typography">
+      <h2 class="section-title">Typography</h2>
+      <p class="section-desc">Inter (or Geist). Big, bold, tight-tracked display headlines like Codex ads. Light body text. Three weights: 400, 500, 700+.</p>
+
+      <div class="card">
+        <div class="flex-col" style="gap: 0;">
+          <div class="type-row"><span class="type-label">6xl / 60</span><span style="font-size: 3.75rem; font-weight: 800; letter-spacing: -0.035em; line-height: 1.1;">Ship faster.</span></div>
+          <div class="type-row"><span class="type-label">5xl / 48</span><span style="font-size: 3rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15;">More than code gen.</span></div>
+          <div class="type-row"><span class="type-label">4xl / 36</span><span style="font-size: 2.25rem; font-weight: 700; letter-spacing: -0.025em;">Page Heading</span></div>
+          <div class="type-row"><span class="type-label">2xl / 24</span><span style="font-size: 1.5rem; font-weight: 600;">Section Title</span></div>
+          <div class="type-row"><span class="type-label">lg / 18</span><span style="font-size: 1.125rem; font-weight: 500;">Subtitle text and descriptions</span></div>
+          <div class="type-row"><span class="type-label">base / 16</span><span style="font-size: 1rem;">Body text for reading paragraphs and longer content blocks.</span></div>
+          <div class="type-row"><span class="type-label">sm / 14</span><span style="font-size: 0.875rem; color: hsl(220,10%,46%);">Secondary text, labels, metadata, timestamps</span></div>
+          <div class="type-row"><span class="type-label">xs / 12</span><span style="font-size: 0.75rem; color: hsl(220,10%,46%);">Captions, fine print, helper text</span></div>
+          <div class="type-row"><span class="type-label">mono</span><span style="font-family: var(--font-mono); font-size: 0.8125rem; color: hsl(252,80%,52%);">const nerve = createDesignSystem()</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- BUTTONS -->
+    <div class="section" id="buttons">
+      <h2 class="section-title">Buttons</h2>
+      <p class="section-desc">All pill-shaped. Dark primary like OpenAI. Color variants for different CTAs. Subtle lift on hover.</p>
+
+      <div class="card" style="margin-bottom: 16px;">
+        <div class="overline">VARIANTS</div>
+        <div class="flex-row">
+          <button class="btn btn-primary">Get Started</button>
+          <button class="btn btn-secondary">Learn More</button>
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-accent">Upgrade</button>
+          <button class="btn btn-orange">Watch Demo</button>
+          <button class="btn btn-green">Deploy</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 16px;">
+        <div class="overline">SIZES</div>
+        <div class="flex-row">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+          <button class="btn btn-primary btn-xl">Extra Large</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="overline">WITH ICONS</div>
+        <div class="flex-row">
+          <button class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Project
+          </button>
+          <button class="btn btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </button>
+          <button class="btn btn-orange">Get Started →</button>
+          <button class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+          <button class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- INPUTS -->
+    <div class="section" id="inputs">
+      <h2 class="section-title">Inputs & Forms</h2>
+      <p class="section-desc">Pill-shaped inputs on white. Subtle dark focus ring. Rounded textareas.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="overline">TEXT INPUTS</div>
+          <div class="flex-col"><input class="input" placeholder="Search projects..."><input class="input" placeholder="you@email.com"></div>
+        </div>
+        <div class="card">
+          <div class="overline">SELECT</div>
+          <div class="flex-col"><select class="select"><option>GPT-5.4</option><option>Claude Opus</option><option>Gemini</option></select><select class="select"><option>All projects</option><option>Active</option><option>Archived</option></select></div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 16px;">
+        <div class="card">
+          <div class="overline">TEXTAREA</div>
+          <textarea class="textarea" placeholder="Write your prompt here..."></textarea>
+        </div>
+        <div class="card">
+          <div class="overline">TOGGLES</div>
+          <div class="flex-col" style="gap: 14px;">
+            <div class="flex-row"><button class="toggle active" onclick="this.classList.toggle('active')"></button><span style="font-size: 0.9375rem;">Streaming enabled</span></div>
+            <div class="flex-row"><button class="toggle" onclick="this.classList.toggle('active')"></button><span style="font-size: 0.9375rem;">Auto-deploy</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- BADGES -->
+    <div class="section" id="badges">
+      <h2 class="section-title">Badges & Status</h2>
+      <p class="section-desc">Tinted pill badges. Status dots. Soft backgrounds with matching text.</p>
+
+      <div class="card" style="margin-bottom: 16px;">
+        <div class="overline">BADGE VARIANTS</div>
+        <div class="flex-row">
+          <span class="badge badge-dark">New</span>
+          <span class="badge badge-violet">Feature</span>
+          <span class="badge badge-green">Active</span>
+          <span class="badge badge-orange">Pending</span>
+          <span class="badge badge-blue">Beta</span>
+          <span class="badge badge-red">Error</span>
+          <span class="badge badge-neutral">Draft</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="overline">WITH STATUS DOTS</div>
+        <div class="flex-row">
+          <span class="badge badge-green"><span class="dot dot-green"></span> Online</span>
+          <span class="badge badge-red"><span class="dot dot-red"></span> Offline</span>
+          <span class="badge badge-orange"><span class="dot dot-amber"></span> Degraded</span>
+          <span class="badge badge-neutral"><span class="dot dot-gray"></span> Unknown</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CARDS -->
+    <div class="section" id="cards">
+      <h2 class="section-title">Cards & Surfaces</h2>
+      <p class="section-desc">Clean white cards. No border accents. Let shadow and spacing do the work. Inspired by ChatGPT's plugin UI.</p>
+
+      <!-- Stat cards — clean, no left border -->
+      <div class="overline">STAT CARDS</div>
+      <div class="grid-4" style="margin-bottom: 24px;">
+        <div class="card" style="padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="hsl(160,60%,42%)" stroke="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <span class="overline" style="margin-bottom: 0;">PROJECT STATUS</span>
+          </div>
+          <div style="font-size: 1.25rem; font-weight: 700;">On Track</div>
+          <div style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); margin-top: 2px;">Ahead by 2 days</div>
+        </div>
+        <div class="card" style="padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="hsl(252,80%,62%)" stroke="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.94s4.18 1.36 4.18 3.85c0 1.89-1.44 2.98-3.12 3.19z"/></svg>
+            <span class="overline" style="margin-bottom: 0;">BUDGET USED</span>
+          </div>
+          <div style="font-size: 1.25rem; font-weight: 700;">$42,500</div>
+          <div style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); margin-top: 2px;">of $65,000 total</div>
+        </div>
+        <div class="card" style="padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="hsl(213,90%,55%)" stroke="none"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4 6h-4v2h4v2h-4v2h4v2H9V7h6v2z"/></svg>
+            <span class="overline" style="margin-bottom: 0;">COMPLETION</span>
+          </div>
+          <div style="font-size: 1.25rem; font-weight: 700;">65%</div>
+          <div class="progress-track" style="margin-top: 10px;"><div class="progress-fill" style="width: 65%;"></div></div>
+        </div>
+        <div class="card" style="padding: 20px 24px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="hsl(24,90%,55%)" stroke="none"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            <span class="overline" style="margin-bottom: 0;">PENDING TASKS</span>
+          </div>
+          <div style="font-size: 1.25rem; font-weight: 700;">3</div>
+          <div style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); margin-top: 2px;">Action required</div>
+        </div>
+      </div>
+
+      <!-- Filter chips (ChatGPT style) -->
+      <div class="overline">FILTER CHIPS</div>
+      <div class="card" style="margin-bottom: 24px;">
+        <div class="flex-row">
+          <span class="chip chip-active">All</span>
+          <span class="chip">Vegetarian</span>
+          <span class="chip">Vegan</span>
+          <span class="chip">Size</span>
+          <span class="chip">Spicy</span>
+        </div>
+      </div>
+
+      <!-- List items with thumbnails (ChatGPT restaurant/music style) -->
+      <div class="overline">LIST ITEMS</div>
+      <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 24px;">
+        <div style="padding: 16px 24px; font-weight: 600; font-size: 0.9375rem; border-bottom: 1px solid hsl(var(--border));">Trending Recipes</div>
+        <div class="list-item">
+          <div class="list-thumb" style="background: hsl(var(--orange-50));"></div>
+          <div class="list-content">
+            <div class="list-title">Pepperoni</div>
+            <div class="list-sub">$21.50</div>
+          </div>
+          <button class="btn-icon" style="width: 32px; height: 32px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+        <div class="list-item">
+          <div class="list-thumb" style="background: hsl(var(--green-50));"></div>
+          <div class="list-content">
+            <div class="list-title">Margherita</div>
+            <div class="list-sub">$16.50</div>
+          </div>
+          <button class="btn-icon" style="width: 32px; height: 32px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+        <div class="list-item">
+          <div class="list-thumb" style="background: hsl(var(--violet-50));"></div>
+          <div class="list-content">
+            <div class="list-title">Vegetarian</div>
+            <div class="list-sub">$18.50</div>
+          </div>
+          <button class="btn-icon" style="width: 32px; height: 32px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Product-style card grid (ChatGPT shopping UI) -->
+      <div class="overline">PRODUCT CARDS</div>
+      <div class="grid-3">
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div style="background: hsl(var(--surface-2)); height: 140px; display: flex; align-items: center; justify-content: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--gray-300))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <div style="padding: 16px;">
+            <div style="font-weight: 600; font-size: 0.9375rem;">Product Name</div>
+            <div style="color: hsl(var(--muted-foreground)); font-size: 0.8125rem; margin: 4px 0;">$19.48</div>
+            <div style="color: hsl(var(--muted-foreground)); font-size: 0.8125rem;">Short description here</div>
+            <div class="stepper" style="margin-top: 12px;">
+              <button class="stepper-btn">−</button>
+              <span class="stepper-value">2</span>
+              <button class="stepper-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div style="background: hsl(var(--surface-2)); height: 140px; display: flex; align-items: center; justify-content: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--gray-300))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <div style="padding: 16px;">
+            <div style="font-weight: 600; font-size: 0.9375rem;">Another Item</div>
+            <div style="color: hsl(var(--muted-foreground)); font-size: 0.8125rem; margin: 4px 0;">$12.50</div>
+            <div style="color: hsl(var(--muted-foreground)); font-size: 0.8125rem;">Creamy and delicious</div>
+            <div class="stepper" style="margin-top: 12px;">
+              <button class="stepper-btn">−</button>
+              <span class="stepper-value">1</span>
+              <button class="stepper-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div style="background: hsl(var(--surface-2)); height: 140px; display: flex; align-items: center; justify-content: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--gray-300))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <div style="padding: 16px;">
+            <div style="font-weight: 600; font-size: 0.9375rem;">Third Product</div>
+            <div style="color: hsl(var(--muted-foreground)); font-size: 0.8125rem; margin: 4px 0;">$15.50</div>
+            <div style="color: hsl(var(--muted-foreground)); font-size: 0.8125rem;">Fresh and flavorful</div>
+            <div class="stepper" style="margin-top: 12px;">
+              <button class="stepper-btn">−</button>
+              <span class="stepper-value">2</span>
+              <button class="stepper-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action row -->
+      <div style="text-align: center; margin-top: 16px;">
+        <button class="btn btn-secondary">See all items <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+      </div>
+
+      <!-- Location/info card (ChatGPT restaurant style) -->
+      <div class="overline" style="margin-top: 28px;">INFO CARD</div>
+      <div class="card" style="max-width: 380px;">
+        <div style="background: hsl(var(--surface-2)); height: 160px; border-radius: 12px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--gray-300))" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+          <div>
+            <div style="font-weight: 700; font-size: 1.125rem;">Brick & Basil</div>
+            <div style="font-size: 0.8125rem; color: hsl(var(--muted-foreground));">1432 Shattuck Ave</div>
+          </div>
+          <span class="badge badge-green" style="font-weight: 700;">9.4</span>
+        </div>
+        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin: 12px 0; line-height: 1.6;">A welcoming neighborhood spot with artisanal recipes and locally sourced ingredients.</p>
+        <div class="flex-row" style="margin-top: 4px;">
+          <button class="btn btn-orange">Order now</button>
+          <button class="btn btn-secondary">Directions</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- COMPONENTS -->
+    <div class="section" id="components">
+      <h2 class="section-title">Components</h2>
+      <p class="section-desc">Tabs, navigation pills, command palette, sidebar, avatars, toasts, code blocks.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="overline">TABS</div>
+          <div class="tabs">
+            <button class="tab active">Overview</button>
+            <button class="tab">Analytics</button>
+            <button class="tab">Settings</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="overline">NAVIGATION PILLS (Outportal style)</div>
+          <div class="flex-row">
+            <span class="nav-pill active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</span>
+            <span class="nav-pill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Timeline</span>
+            <span class="nav-pill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Budget</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 16px;">
+        <div class="card">
+          <div class="overline">AVATARS</div>
+          <div class="flex-row">
+            <div class="avatar avatar-lg avatar-violet">JR</div>
+            <div class="avatar avatar-lg avatar-green">AI</div>
+            <div class="avatar avatar-lg avatar-blue">CL</div>
+            <div class="avatar avatar-lg avatar-orange">V0</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="overline">TOAST</div>
+          <div class="toast">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="hsl(160,60%,42%)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <div>
+              <div style="font-weight: 600; font-size: 0.875rem;">Deployed successfully</div>
+              <div style="color: hsl(220,10%,46%); font-size: 0.8125rem;">Your project is now live.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Command Palette -->
+      <div class="card" style="margin-top: 16px;">
+        <div class="overline">COMMAND PALETTE</div>
+        <div class="cmd">
+          <input class="cmd-input" placeholder="Type a command or search..." readonly>
+          <div class="cmd-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Create new project <span class="kbd">⌘ N</span></div>
+          <div class="cmd-item" style="background: hsl(var(--surface-2)); color: hsl(var(--foreground));"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search files... <span class="kbd">⌘ P</span></div>
+          <div class="cmd-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Deploy to production <span class="kbd">⌘ D</span></div>
+        </div>
+      </div>
+
+      <!-- Sidebar + Code -->
+      <div class="grid-2" style="margin-top: 16px;">
+        <div class="card">
+          <div class="overline">SIDEBAR</div>
+          <div class="sidebar-demo">
+            <div class="sidebar-item active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Dashboard</div>
+            <div class="sidebar-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Projects</div>
+            <div class="sidebar-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Team</div>
+            <div class="sidebar-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</div>
+          </div>
+        </div>
+        <div class="flex-col" style="gap: 16px;">
+          <div class="card">
+            <div class="overline">CODE BLOCK</div>
+            <div class="code">import { createNerve } from '@nerve/ui'
+
+const theme = createNerve({
+  mode: 'light',
+  primary: 'dark',
+  radius: 'pill',
+  font: 'inter',
+})</div>
+          </div>
+          <div class="card">
+            <div class="overline">SKELETON LOADING</div>
+            <div class="flex-col" style="gap: 10px;">
+              <div class="skeleton" style="height: 14px; width: 60%;"></div>
+              <div class="skeleton" style="height: 14px; width: 100%;"></div>
+              <div class="skeleton" style="height: 14px; width: 80%;"></div>
+              <div class="skeleton" style="height: 40px; width: 40%; margin-top: 4px; border-radius: 9999px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SPACING -->
+    <div class="section" id="spacing">
+      <h2 class="section-title">Spacing Scale</h2>
+      <p class="section-desc">4px base. Generous whitespace — let things breathe.</p>
+
+      <div class="card">
+        <div class="flex-col" style="gap: 8px;">
+          <div class="flex-row"><span class="type-label">4px</span><div class="space-bar" style="width: 16px;"></div></div>
+          <div class="flex-row"><span class="type-label">8px</span><div class="space-bar" style="width: 32px;"></div></div>
+          <div class="flex-row"><span class="type-label">16px</span><div class="space-bar" style="width: 64px;"></div></div>
+          <div class="flex-row"><span class="type-label">24px</span><div class="space-bar" style="width: 96px;"></div></div>
+          <div class="flex-row"><span class="type-label">32px</span><div class="space-bar" style="width: 128px;"></div></div>
+          <div class="flex-row"><span class="type-label">48px</span><div class="space-bar" style="width: 192px;"></div></div>
+          <div class="flex-row"><span class="type-label">64px</span><div class="space-bar" style="width: 256px;"></div></div>
+          <div class="flex-row"><span class="type-label">96px</span><div class="space-bar" style="width: 384px;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- RESOURCES -->
+    <div class="section">
+      <h2 class="section-title">Setup</h2>
+      <div class="card">
+        <div class="code" style="font-size: 0.75rem;">npm install geist                  # Font (optional, falls back to Inter)
+npx shadcn@latest init             # Component framework
+npm install tailwindcss-animate    # Animations
+npm install lucide-react           # Icons
+npm install @lobehub/icons         # AI brand icons (LobeHub)
+npm install @radix-ui/react-icons  # Radix icons</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; padding: 24px 0 0; color: hsl(var(--muted-foreground)); font-size: 0.8125rem;">
+      NERVE Design System v2 — Light-first. Built for Jake.
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tabs').forEach(g => {
+      g.querySelectorAll('.tab').forEach(t => {
+        t.addEventListener('click', () => { g.querySelectorAll('.tab').forEach(x => x.classList.remove('active')); t.classList.add('active'); });
+      });
+    });
+    document.querySelectorAll('.sidebar-demo').forEach(s => {
+      s.querySelectorAll('.sidebar-item').forEach(i => {
+        i.addEventListener('click', () => { s.querySelectorAll('.sidebar-item').forEach(x => x.classList.remove('active')); i.classList.add('active'); });
+      });
+    });
+    document.querySelectorAll('.nav-link').forEach(l => {
+      l.addEventListener('click', e => { e.preventDefault(); document.querySelector(l.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' }); });
+    });
+    // Chip toggle
+    document.querySelectorAll('.chip').forEach(c => {
+      c.addEventListener('click', () => c.classList.toggle('active'));
+    });
+    // Chip-active initial state
+    document.querySelectorAll('.chip-active').forEach(c => c.classList.add('active'));
+    // Stepper buttons
+    document.querySelectorAll('.stepper').forEach(s => {
+      const minus = s.querySelector('.stepper-btn:first-child');
+      const plus = s.querySelector('.stepper-btn:last-child');
+      const val = s.querySelector('.stepper-value');
+      minus?.addEventListener('click', () => { let v = parseInt(val.textContent); if (v > 0) val.textContent = v - 1; });
+      plus?.addEventListener('click', () => { val.textContent = parseInt(val.textContent) + 1; });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+/* ============================================================
+   NERVE DESIGN SYSTEM v3 — Component Overrides
+   OpenAI-heavy aesthetic. Light-first. Pill everything.
+   Floating cards, warm backgrounds, big bold type.
+   Bento grids, corporate polish, elegant restraint.
+
+   Import AFTER tokens.css:
+     @import './tokens.css';
+     @import './shadcn-overrides.css';
+   ============================================================ */
+
+@layer components {
+
+  /* ========================
+     BUTTONS — Pill-shaped, OpenAI-style
+     Primary = dark/black (like OpenAI "Get started")
+     Secondary = outlined pill
+     Accent variants for color CTAs
+     ======================== */
+
+  [data-slot="button"],
+  .btn,
+  button[class*="inline-flex"][class*="items-center"] {
+    border-radius: 9999px !important;
+  }
+
+  .btn {
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    border: 1px solid transparent;
+    line-height: 1;
+    padding: 10px 24px;
+    text-decoration: none;
+  }
+
+  /* Primary — dark/black like OpenAI */
+  .btn-primary {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-xs);
+  }
+  .btn-primary:hover {
+    background: hsl(220 14% 22%);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  /* Secondary — bordered pill */
+  .btn-secondary {
+    background: hsl(var(--background-pure));
+    color: hsl(var(--foreground));
+    border-color: hsl(var(--border-strong));
+  }
+  .btn-secondary:hover {
+    background: hsl(var(--surface-2));
+    border-color: hsl(var(--gray-300));
+  }
+
+  /* Ghost */
+  .btn-ghost {
+    background: transparent;
+    color: hsl(var(--muted-foreground));
+  }
+  .btn-ghost:hover {
+    background: hsl(var(--surface-2));
+    color: hsl(var(--foreground));
+  }
+
+  /* Accent — violet */
+  .btn-accent {
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+  }
+  .btn-accent:hover {
+    background: hsl(252 80% 55%);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Orange CTA — like UploadFiles */
+  .btn-orange {
+    background: hsl(var(--accent-orange));
+    color: #fff;
+  }
+  .btn-orange:hover {
+    background: hsl(24 90% 48%);
+    transform: translateY(-1px);
+  }
+
+  /* Green CTA — like Outportal */
+  .btn-green {
+    background: hsl(var(--accent-green));
+    color: #fff;
+  }
+  .btn-green:hover {
+    background: hsl(160 60% 36%);
+    transform: translateY(-1px);
+  }
+
+  /* Danger */
+  .btn-danger {
+    background: hsl(var(--destructive));
+    color: #fff;
+  }
+  .btn-danger:hover {
+    background: hsl(0 72% 45%);
+  }
+
+  /* Icon button */
+  .btn-icon {
+    width: 40px; height: 40px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: hsl(var(--background-pure));
+    color: hsl(var(--muted-foreground));
+    border-radius: 9999px;
+    border: 1px solid hsl(var(--border));
+    cursor: pointer; transition: all 200ms ease-in-out;
+  }
+  .btn-icon:hover {
+    background: hsl(var(--surface-2));
+    color: hsl(var(--foreground));
+    border-color: hsl(var(--border-strong));
+  }
+
+  /* Sizes */
+  .btn-sm { padding: 6px 16px; font-size: 0.8125rem; }
+  .btn-lg { padding: 14px 32px; font-size: 1rem; }
+  .btn-xl { padding: 18px 40px; font-size: 1.125rem; }
+
+  /* ========================
+     CARDS — Floating white on warm bg
+     ======================== */
+  .card,
+  [data-slot="card"] {
+    background: hsl(var(--surface-1));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    transition: all 200ms ease-in-out;
+  }
+  .card:hover,
+  .card-interactive:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  /* Floating card — like the mockup screenshots in the ads */
+  .card-float {
+    background: hsl(var(--surface-1));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-float);
+  }
+
+  /* Stat card — clean, icon + overline style */
+  .card-stat {
+    background: hsl(var(--surface-1));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-card);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-xs);
+  }
+
+  /* Tinted cards (like Viktor colored stat cards) */
+  .card-violet { background: hsl(var(--violet-50)); border-color: hsl(var(--violet-100)); }
+  .card-green  { background: hsl(var(--green-50)); border-color: hsl(var(--green-100)); }
+  .card-blue   { background: hsl(var(--blue-50)); border-color: hsl(var(--blue-100)); }
+  .card-orange { background: hsl(var(--orange-50)); border-color: hsl(var(--orange-400) / 0.15); }
+  .card-pink   { background: hsl(var(--pink-50)); border-color: hsl(var(--pink-400) / 0.15); }
+
+  /* Glass card — dark mode / Anova brand contexts only */
+  .card-glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid hsl(var(--glass-border));
+    border-radius: 32px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(115, 5, 255, 0.08);
+  }
+
+  /* Anova brand card — purple glow accent */
+  .card-anova {
+    background: hsl(var(--surface-1));
+    border: 1px solid hsl(var(--anova-purple) / 0.12);
+    border-radius: var(--radius-card);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 0 24px rgba(115, 5, 255, 0.06);
+  }
+
+  /* ========================
+     INPUTS
+     ======================== */
+  .input,
+  [data-slot="input"],
+  input[type="text"], input[type="email"], input[type="password"],
+  input[type="search"], input[type="url"], input[type="number"],
+  select {
+    border-radius: var(--radius-input);
+    background: hsl(var(--background-pure));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+    padding: 10px 20px;
+    font-size: 0.9375rem;
+    transition: all 200ms ease-in-out;
+    outline: none;
+    font-family: var(--font-sans);
+  }
+  .input:focus, input:focus, select:focus {
+    border-color: hsl(var(--gray-400));
+    box-shadow: 0 0 0 3px hsl(var(--gray-900) / 0.06);
+  }
+  .input::placeholder, input::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+
+  textarea {
+    border-radius: var(--radius-panel) !important;
+    background: hsl(var(--background-pure));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+    padding: 14px 18px;
+    font-size: 0.9375rem;
+    font-family: var(--font-sans);
+    resize: vertical;
+    outline: none;
+    transition: all 200ms ease-in-out;
+  }
+  textarea:focus {
+    border-color: hsl(var(--gray-400));
+    box-shadow: 0 0 0 3px hsl(var(--gray-900) / 0.06);
+  }
+
+  /* ========================
+     BADGES — Pill, tinted backgrounds
+     ======================== */
+  .badge {
+    border-radius: 9999px;
+    padding: 4px 14px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.5;
+  }
+  .badge-primary  { background: hsl(var(--gray-900)); color: #fff; }
+  .badge-violet   { background: hsl(var(--violet-50)); color: hsl(var(--violet-500)); border: 1px solid hsl(var(--violet-100)); }
+  .badge-green    { background: hsl(var(--green-50)); color: hsl(var(--green-500)); border: 1px solid hsl(var(--green-100)); }
+  .badge-orange   { background: hsl(var(--orange-50)); color: hsl(var(--orange-500)); border: 1px solid hsl(var(--orange-400) / 0.15); }
+  .badge-blue     { background: hsl(var(--blue-50)); color: hsl(var(--blue-500)); border: 1px solid hsl(var(--blue-100)); }
+  .badge-red      { background: hsl(var(--red-50)); color: hsl(var(--red-500)); border: 1px solid hsl(var(--red-400) / 0.15); }
+  .badge-neutral  { background: hsl(var(--gray-50)); color: hsl(var(--gray-600)); border: 1px solid hsl(var(--gray-200)); }
+
+  /* ========================
+     DISPLAY TYPOGRAPHY — Codex-style headlines
+     ======================== */
+  .display-xl {
+    font-family: var(--font-display);
+    font-size: var(--text-6xl);
+    font-weight: var(--font-extrabold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tighter);
+    color: hsl(var(--foreground));
+  }
+  .display-lg {
+    font-family: var(--font-display);
+    font-size: var(--text-5xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tighter);
+    color: hsl(var(--foreground));
+  }
+  .display-md {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: hsl(var(--foreground));
+  }
+
+  /* Overline / label */
+  .overline {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* ========================
+     TABS — Pill-style
+     ======================== */
+  .tabs-list {
+    background: hsl(var(--surface-2));
+    border-radius: 9999px;
+    padding: 4px;
+    display: inline-flex;
+    gap: 2px;
+  }
+  .tab-trigger {
+    border-radius: 9999px;
+    padding: 7px 18px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    transition: all 200ms ease-in-out;
+    font-family: var(--font-sans);
+  }
+  .tab-trigger:hover {
+    color: hsl(var(--foreground));
+  }
+  .tab-trigger[data-state="active"],
+  .tab-trigger.active {
+    color: hsl(var(--foreground));
+    background: hsl(var(--background-pure));
+    box-shadow: var(--shadow-xs);
+  }
+
+  /* ========================
+     NAVIGATION — Top bar pills (like Outportal)
+     ======================== */
+  .nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    transition: all 200ms ease-in-out;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .nav-pill:hover {
+    background: hsl(var(--surface-2));
+    color: hsl(var(--foreground));
+  }
+  .nav-pill.active {
+    background: hsl(var(--accent-green) / 0.08);
+    color: hsl(var(--green-500));
+  }
+
+  /* ========================
+     AVATARS
+     ======================== */
+  .avatar {
+    border-radius: 9999px; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 600; flex-shrink: 0;
+  }
+  .avatar-sm { width: 28px; height: 28px; font-size: 0.65rem; }
+  .avatar-md { width: 36px; height: 36px; font-size: 0.8rem; }
+  .avatar-lg { width: 44px; height: 44px; font-size: 0.9rem; }
+
+  .avatar-violet { background: hsl(var(--violet-100)); color: hsl(var(--violet-500)); }
+  .avatar-green  { background: hsl(var(--green-100)); color: hsl(var(--green-500)); }
+  .avatar-blue   { background: hsl(var(--blue-100)); color: hsl(var(--blue-500)); }
+  .avatar-orange { background: hsl(var(--orange-50)); color: hsl(var(--orange-500)); }
+
+  /* ========================
+     STATUS DOTS
+     ======================== */
+  .dot { width: 8px; height: 8px; border-radius: 9999px; display: inline-block; }
+  .dot-green  { background: hsl(var(--green-400)); }
+  .dot-red    { background: hsl(var(--red-400)); }
+  .dot-amber  { background: hsl(var(--amber-400)); }
+  .dot-gray   { background: hsl(var(--gray-300)); }
+
+  /* ========================
+     CODE BLOCKS
+     ======================== */
+  .code-block {
+    background: hsl(var(--gray-900));
+    border-radius: var(--radius-code);
+    padding: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    color: hsl(40 20% 90%);
+  }
+  .inline-code {
+    background: hsl(var(--surface-2));
+    border-radius: 6px;
+    padding: 2px 7px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: hsl(var(--violet-500));
+  }
+
+  /* ========================
+     SKELETON
+     ======================== */
+  .skeleton {
+    background: linear-gradient(90deg, hsl(var(--gray-100)) 25%, hsl(var(--gray-200)) 50%, hsl(var(--gray-100)) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+    border-radius: var(--radius-code);
+  }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+  /* ========================
+     TOAST
+     ======================== */
+  .toast {
+    background: hsl(var(--surface-1));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-panel);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: var(--shadow-lg);
+    max-width: 380px;
+    font-size: 0.875rem;
+  }
+
+  /* ========================
+     DIVIDER
+     ======================== */
+  .divider {
+    height: 1px;
+    background: hsl(var(--border));
+    border: none;
+    margin: 32px 0;
+  }
+
+  /* ========================
+     UTILITY CLASSES
+     ======================== */
+
+  /* Gradient backgrounds (like Codex/Viktor ads) */
+  .bg-gradient-warm {
+    background: linear-gradient(180deg, hsl(var(--background-warm)) 0%, hsl(var(--background)) 100%);
+  }
+  .bg-gradient-cool {
+    background: linear-gradient(180deg, hsl(var(--background-cool)) 0%, hsl(var(--background)) 100%);
+  }
+  .bg-gradient-sunset {
+    background: linear-gradient(135deg, hsl(40 30% 95%) 0%, hsl(330 30% 95%) 50%, hsl(250 30% 95%) 100%);
+  }
+
+  /* Anova brand gradients (dark mode / brand contexts) */
+  .bg-gradient-anova {
+    background: radial-gradient(ellipse at center, rgba(115,5,255,0.12) 0%, rgba(115,5,255,0.04) 40%, transparent 70%);
+  }
+  .bg-gradient-anova-line {
+    background: linear-gradient(90deg, #7305FF, #9B4DFF);
+  }
+
+  /* Gradient text */
+  .text-gradient-violet {
+    background: linear-gradient(135deg, hsl(var(--violet-400)), hsl(var(--blue-400)));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .text-gradient-warm {
+    background: linear-gradient(135deg, hsl(var(--orange-400)), hsl(var(--pink-400)));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  /* Anova brand button — purple CTA (brand contexts / dark mode) */
+  .btn-anova {
+    background: hsl(var(--anova-purple));
+    color: #fff;
+    border-radius: 9999px;
+  }
+  .btn-anova:hover {
+    background: hsl(268 100% 58%);
+    box-shadow: 0 0 20px rgba(115, 5, 255, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* ========================
+     BENTO GRID — Modular card layouts
+     ======================== */
+  .bento-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  @media (min-width: 768px) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
+  @media (min-width: 1024px) {
+    .bento-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  }
+  .bento-span-2 { grid-column: span 2; }
+  .bento-span-full { grid-column: 1 / -1; }
+
+  /* KBD */
+  .kbd {
+    background: hsl(var(--surface-2));
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    padding: 2px 8px;
+    font-size: 0.6875rem;
+    font-family: var(--font-mono);
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* ========================
+     FILTER CHIPS — ChatGPT-style toggleable pills
+     ======================== */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 18px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    background: hsl(var(--background-pure));
+    border: 1px solid hsl(var(--border));
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    user-select: none;
+  }
+  .chip:hover {
+    border-color: hsl(var(--border-strong));
+    color: hsl(var(--foreground));
+  }
+  .chip-active,
+  .chip.active {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border-color: hsl(var(--primary));
+  }
+
+  /* ========================
+     LIST ITEMS — ChatGPT thumbnail rows
+     ======================== */
+  .list-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 24px;
+    border-bottom: 1px solid hsl(var(--border));
+    transition: background 150ms ease-out;
+  }
+  .list-item:last-child { border-bottom: none; }
+  .list-item:hover { background: hsl(var(--surface-2)); }
+
+  .list-thumb {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .list-content { flex: 1; min-width: 0; padding: 0 4px; }
+  .list-title {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: hsl(var(--foreground));
+  }
+  .list-sub {
+    font-size: 0.8125rem;
+    color: hsl(var(--muted-foreground));
+    margin-top: 3px;
+  }
+
+  /* ========================
+     STEPPER — Quantity selector (ChatGPT shopping)
+     ======================== */
+  .stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid hsl(var(--border));
+    border-radius: 9999px;
+    overflow: hidden;
+    background: hsl(var(--background-pure));
+  }
+  .stepper-btn {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    transition: all 150ms ease-out;
+    font-family: var(--font-sans);
+  }
+  .stepper-btn:hover {
+    background: hsl(var(--surface-2));
+    color: hsl(var(--foreground));
+  }
+  .stepper-value {
+    min-width: 28px;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+}
