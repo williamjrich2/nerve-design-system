@@ -1,0 +1,316 @@
+/* ================================================================
+   NERVE v3 — Sora Page (React CSS Module)
+   Mobile-first, fully responsive.
+   ================================================================ */
+
+.root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background: #0c0c0e;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 20px 60px;
+}
+
+.heroIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(115, 5, 255, 0.06);
+}
+
+.heroTitle {
+  font-size: clamp(36px, 8vw, 80px);
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  margin-bottom: 16px;
+}
+
+.heroSub {
+  font-size: clamp(15px, 2.5vw, 19px);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 480px;
+  padding: 0 16px;
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 250ms ease;
+  text-decoration: none;
+}
+
+.heroCta:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: 80px 0;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sectionTitle {
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 14px;
+}
+
+.sectionBody {
+  font-size: clamp(15px, 2vw, 17px);
+  font-weight: 300;
+  line-height: 1.72;
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 440px;
+}
+
+/* ===== SPLIT LAYOUT ===== */
+.split {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.splitReverse {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 40px;
+}
+
+@media (min-width: 900px) {
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .splitReverse {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: center;
+    flex-direction: unset;
+  }
+  .section {
+    padding: 160px 0;
+  }
+}
+
+/* ===== FEATURE PILLS ===== */
+.featurePills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.featurePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+/* ===== CAROUSEL ===== */
+.carouselWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselItem {
+  flex: 0 0 240px;
+  scroll-snap-align: start;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  aspect-ratio: 9 / 16;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 600px) {
+  .carouselItem {
+    flex: 0 0 320px;
+  }
+}
+
+/* ===== SOUND GRID ===== */
+.soundGrid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 0;
+  scrollbar-width: none;
+}
+
+.soundGrid::-webkit-scrollbar {
+  display: none;
+}
+
+.soundCard {
+  flex: 0 0 170px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.soundCard:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+@media (min-width: 600px) {
+  .soundCard {
+    flex: 0 0 200px;
+  }
+}
+
+.soundLabel {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+}
+
+.soundPlay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  padding: 40px 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ===== MOBILE OVERRIDES ===== */
+@media (max-width: 600px) {
+  .hero {
+    padding: 80px 16px 40px;
+  }
+
+  .heroIcon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .heroIcon svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .heroCta {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .carouselItem {
+    flex: 0 0 200px;
+  }
+
+  .soundCard {
+    flex: 0 0 150px;
+    padding: 14px;
+  }
+}
